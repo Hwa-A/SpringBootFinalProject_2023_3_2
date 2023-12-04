@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<style>
+
+</style>
+</head>
+<body>
+	<div>
+        <h2>Login</h2>
+        <form action="/login_proc" method="post">
+            <div>
+                <label for="email">Email: </label>
+                <input type="text" name="email" placeholder="Email"/> 
+            </div>
+            <div>
+                <label for="password">Password: </label>
+                <input type="password" name="password" placeholder="Password"/>
+            </div>
+            <button type="submit" >로그인(Sign In)</button>
+            <!-- 현재 페이지에서 다른 페이지로 이동 형식
+            	 : onclick ="location.href='index.html'" -->
+            <!-- \': 따옴표(')를 표현하는 이스케이프 문자 -->
+		</form>
+        <div>
+            <button type="button" th:onclick="'window.location.href=\''+ @{/signUp} +'\''">회원가입</button>
+        </div>
+    </div>
+</body>
+</html>
