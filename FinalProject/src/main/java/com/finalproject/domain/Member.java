@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data	
@@ -27,7 +29,7 @@ import lombok.NoArgsConstructor;
 // @RequiredArgsConstructor	// final이나 @NonNull인 필드 값만 매개변수로 받는 생성자 생성 
 @Builder	// 객체 생성 시, 필드에 값을 순서 없이 줄 수 있도록 도와줌
 @Entity
-public class Member {
+public class Member {	
 	@Id
 	@Column(nullable = false)	// : Null 허용X
 	private String email;	// 회원 이메일(PK)
@@ -35,8 +37,5 @@ public class Member {
 	private String password;	// 회원 비밀번호
 	@Column(columnDefinition = "VARCHAR(5) default 'USER'")
 	private String role;	// 회원 권한(default: USER)
-	
-	
-	
-	
+
 }
