@@ -42,7 +42,7 @@
                 <span id="passwordCheckError" class="error-message"></span>
             </div>
             <button type="submit" >가입(Sign Up)</button>
-            <button type="button" onclick="location.href='/login'" >로그인(Sign In)</button>
+            <button type="button" onclick="location.href='/login'" >로그인(Login)</button>
             <!-- 현재 페이지에서 다른 페이지로 이동 형식
             	 : onclick ="location.href='index.html'" -->
             <!-- \': 따옴표(')를 표현하는 이스케이프 문자 -->
@@ -56,7 +56,7 @@
     		
     		if(input.value === ""){
     			// 입력이 안된 경우
-    			emailError.textContent = '필수 입력입니다';
+    			emailError.textContent = '이메일 필수 입력';
     		    emailError.style.color = 'red';
     		}else if(!regExp.test(input.value)){
     			// email이 유효하지 않은 경우
@@ -75,7 +75,7 @@
     		
     		if(input.value === ""){
     			// 입력이 안된 경우
-    			unameError.textContent = '필수 입력입니다';
+    			unameError.textContent = '닉네임 필수 입력';
     		    unameError.style.color = 'red';
     		}else if(!regExp.test(input.value)){
     			// uname이 유효하지 않은 경우
@@ -94,7 +94,7 @@
     		
     		if(input.value === ""){
     			// 입력이 안된 경우
-    			passwordError.textContent = '필수 입력입니다';
+    			passwordError.textContent = '비밀번호 필수 입력';
     		    passwordError.style.color = 'red';
     		}else if(!regExp.test(input.value)){
     			// password가 유효하지 않은 경우
@@ -114,7 +114,7 @@
     		
     		if(input.value === ""){
     			// 입력이 안된 경우
-    			passwordCheckError.textContent = '필수 입력입니다';
+    			passwordCheckError.textContent = '비밀번호 확인 필수 입력';
     		    passwordCheckError.style.color = 'red';
     		}else if(password.value === input.value){
     			// 비밀번호 확인이 동일한 값인 경우
@@ -135,9 +135,9 @@
 		    
 			if(email === ""){
     			// 입력이 안된 경우
-    			emailError.textContent = '필수 입력입니다';
+    			emailError.textContent = '이메일 필수 입력';
     			emailError.style.color = 'red';
-    		}else if(emailError.textContent === ""){	// 이메일에 대한 에러 메시지가 없는 경우
+    		}else if(emailError.textContent !== "@를 추가한 올바른 형식의 이메일 주소를 입력해주세요"){	// 이메일에 대한 에러 메시지가 없는 경우
 	    	    var xhr = new XMLHttpRequest();		// XMLHttpRequest객체: 서버와 비동기 통신을 가능하게 해주는 객체
 	    	    
 	    	    xhr.open('POST', '/checkEmail', true);	// 서버에 POST요청 보낼 준비 => HTTP 요청을 초기화하는 역할 / 마지막 인수: 비동기적으로 요청 처리할지 여부
@@ -169,16 +169,16 @@
 		    
 		    if(uname === ""){
     			// 입력이 안된 경우
-    			unameError.textContent = '필수 입력입니다';
+    			unameError.textContent = '닉네임 필수 입력';
     			unameError.style.color = 'red';
-    		}else if(unameError.textContent === ""){	// 닉네임에 대한 에러 메시지가 없는 경우
+    		}else if(unameError.textContent !== "공백없이 특수문자를 제외한 2~10글자를 입력해주세요"){	// 닉네임에 대한 에러 메시지가 없는 경우
 	    	    var xhr = new XMLHttpRequest();		// XMLHttpRequest객체: 서버와 비동기 통신을 가능하게 해주는 객체
 	    	    
 	    	    xhr.open('POST', '/checkUname', true);	// 서버에 POST요청 보낼 준비 => HTTP 요청을 초기화하는 역할 / 마지막 인수: 비동기적으로 요청 처리할지 여부
 	    	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');	// HTTP 요청 헤더 설정/Content-Type 헤더를 두번째 인수 값으로 설정
 	    	    xhr.onreadystatechange = function () {	// 요청의 상태가 변경될 때마다 실행되는 함수 설정
 	    	        
-	    	    	if (xhr.readyState === 4 && xhr.status === 200) {	// xhr.readyState === 4: 요청 완료 성공적으로 요청 처리
+	    	    	if (xhr.readyState === 4 && xhr.status === 200) {	// xhr.readyState === 4: 요청을 성공적으로 했음을 처리
 	    	            var result = JSON.parse(xhr.responseText);		// xhr.status === 200: 성공적으로 요청 처리
 	    	            if (result.valid) {
 	    	                // 사용 가능한 uname인 경우
@@ -209,22 +209,28 @@
     		
     		// 이메일 입력이 없는 경우
 			if(email.value === ""){
-				emailError.textContent = '필수 입력입니다';
+				emailError.textContent = '이메일 필수 입력';
+				emailError.style.color = 'red';	
+			}else if(emailError.textContent === ""){
+				emailError.textContent = '사용 가능한 이메일인지 확인해주세요';
 				emailError.style.color = 'red';	
 			}
 			// 닉네임 입력이 없는 경우
 			if(uname.value === ""){
-				unameError.textContent = '필수 입력입니다';
+				unameError.textContent = '닉네임 필수 입력';
+				unameError.style.color = 'red';	
+			}else if(unameError.textContent === ""){
+				unameError.textContent = '사용 가능한 닉네임인지 확인해주세요';
 				unameError.style.color = 'red';	
 			}
 			// 비밀번호 입력이 없는 경우
 			if(password.value === ""){
-				passwordError.textContent = '필수 입력입니다';
+				passwordError.textContent = '비밀번호 필수 입력';
 				passwordError.style.color = 'red';	
 			}
 			// 비밀번호 확인 입력이 없는 경우
 			if(passwordCheck.value === ""){
-				passwordCheckError.textContent = '필수 입력입니다';
+				passwordCheckError.textContent = '비밀번호 확인 필수 입력';
 				passwordCheckError.style.color = 'red';	
 			}
     		
