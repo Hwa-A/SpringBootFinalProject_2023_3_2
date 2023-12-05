@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<style>
+	.error-message{
+		display: block;
+	}
+</style>
+</head>
+<body>
+	<div>
+        <h2>Sign-Up</h2>
+        <form id="signUpForm" action="/signUp" method="post">
+            <div>
+                <label for="email">이메일: </label>
+                <input type="text" name="email" id="email" oninput="checkEmailInput(this)" 
+                placeholder="Email" > 
+                <button type="button" id="emailCheck">이메일 확인</button>
+            	<span id="emailError" class="error-message"></span>
+            </div>
+            <div>
+                <label for="uname">닉네임: </label>
+                <!-- oninput 속성: 사용자가 입력 필드에 어떤 값을 입력할 때마나 js함수 호출 -->
+                <input type="text" name="uname" id="uname" oninput="checkUnameInput(this)"
+                placeholder="Nickname" > 
+            	<button type="button" id="unameCheck">닉네임 확인</button>
+            	<span id="unameError" class="error-message"></span>
+            </div>
+            <div>
+                <label for="password">비밀번호: </label>
+                <input type="password" name="password" id="password" oninput="checkPasswordInput(this)"
+                	placeholder="Password" >
+                <span id="passwordError" class="error-message"></span>
+                	
+            </div>
+            <div>
+                <label for="passwordCheck">비밀번호 확인: </label>
+                <input type="password" name="passwordCheck" id="passwordCheck" oninput="checkSamePassword(this)"
+                	placeholder="Password Check" >
+                <span id="passwordCheckError" class="error-message"></span>
+            </div>
+            <button type="submit" >가입(Sign Up)</button>
+            <button type="button" onclick="location.href='/login'" >로그인(Sign In)</button>
+            <!-- 현재 페이지에서 다른 페이지로 이동 형식
+            	 : onclick ="location.href='index.html'" -->
+            <!-- \': 따옴표(')를 표현하는 이스케이프 문자 -->
+		</form>
+    </div>
+    <script type="text/javascript">
+    	// 실시간으로 이메일 유효성 검사
+    	function checkEmailInput(input){
+    		var regExp = /^[^@]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;		// 정규 표현식
+    		var emailError = document.getElementById('emailError');	
+    		
+    		if(input.value === ""){
+    			// 입력이 안된 경우
+    			emailError.textContent = '필수 입력입니다';
+    		    emailError.style.color = 'red';
+    		}else if(!regExp.test(input.value)){
+    			// email이 유효하지 않은 경우
+    			emailError.textContent = '@를 추가한 올바른 형식의 이메일 주소를 입력해주세요';
+    		    emailError.style.color = 'red';
+    		}else{
+    			// email이 유효한 경우
+    			emailError.textContent = "";	// 에러 메시지 없애기
+    		}
+    	}
+    	
+    	// 실시간으로 닉네임(uname) 유효성 검사
+    	function checkUnameInput(input){
+    		var regExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/;		// 정규 표현식
+    		var unameError = document.getElementById('unameError');	
+    		
+    		if(input.value === ""){
+    			// 입력이 안된 경우
+    			unameError.textContent = '필수 입력입니다';
+    		    unameError.style.color = 'red';
+    		}else if(!regExp.test(input.value)){
+    			// uname이 유효하지 않은 경우
+    			unameError.textContent = '공백없이 특수문자를 제외한 2~10글자를 입력해주세요';
+    		    unameError.style.color = 'red';
+    		  } else {
+    		    // uname이 유효한 경우
+    			unameError.textContent = "";	// 에러 메시지 없애기
+    		  }
+		}
+    	
+    	// 실시간으로 비밀번호(password) 유효성 검사
+    	function checkPasswordInput(input){
+    		var regExp = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9\s]).{8,16}/;		// 정규 표현식
+    		var passwordError = document.getElementById('passwordError');	
+    		
+    		if(input.value === ""){
+    			// 입력이 안된 경우
+    			passwordError.textContent = '필수 입력입니다';
+    		    passwordError.style.color = 'red';
+    		}else if(!regExp.test(input.value)){
+    			// password가 유효하지 않은 경우
+    			passwordError.textContent = '공백없이 영문(대소문자), 숫자, 특수문자를 최소 1글자씩 포함해 8~16글자를 입력해주세요';
+    			passwordError.style.color = 'red';
+    		  } else {
+    			// password가 유효한 경우
+      			passwordError.textContent = "";	// 에러 메시지 없애기
+    		  }
+    	}
+    	
+    	// 실시간으로 비밀번호 확인(passwordCheck) 유효성 검사
+    	function checkSamePassword(input){
+    		var password = document.getElementById('password');		// password 요소 대입
+    		var passwordCheck = document.getElementById('passwordCheck');		// passwordCheck 요소 대입
+    		var passwordCheckError = document.getElementById('passwordCheckError');		
+    		
+    		if(input.value === ""){
+    			// 입력이 안된 경우
+    			passwordCheckError.textContent = '필수 입력입니다';
+    		    passwordCheckError.style.color = 'red';
+    		}else if(password.value === input.value){
+    			// 비밀번호 확인이 동일한 값인 경우
+    			passwordCheckError.textContent = '비밀번호가 일치합니다';
+    			passwordCheckError.style.color = 'green';
+    		}else{
+    			// 비밀번호 확인이 동일하지 않는 값인 경우
+    			passwordCheckError.textContent = '비밀번호가 일치하지 않습니다';
+    			passwordCheckError.style.color = 'red';
+    		}
+    	}
+    	
+    	// AJAX를 이용해 이메일 사용 가능 여부 검사(비동기적) 코드
+    	// id가 emailCheck인 HTML요소를 클릭하는 경우 함수 실행
+    	document.getElementById('emailCheck').addEventListener('click', function() {    		
+			var email = document.getElementById('email').value;		// id가 email인 요소의 값을 email변수에 저장
+			var emailError = document.getElementById('emailError');
+		    
+			if(email === ""){
+    			// 입력이 안된 경우
+    			emailError.textContent = '필수 입력입니다';
+    			emailError.style.color = 'red';
+    		}else if(emailError.textContent === ""){	// 이메일에 대한 에러 메시지가 없는 경우
+	    	    var xhr = new XMLHttpRequest();		// XMLHttpRequest객체: 서버와 비동기 통신을 가능하게 해주는 객체
+	    	    
+	    	    xhr.open('POST', '/checkEmail', true);	// 서버에 POST요청 보낼 준비 => HTTP 요청을 초기화하는 역할 / 마지막 인수: 비동기적으로 요청 처리할지 여부
+	    	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');	// HTTP 요청 헤더 설정/Content-Type 헤더를 두번째 인수 값으로 설정
+	    	    xhr.onreadystatechange = function () {	// 요청의 상태가 변경될 때마다 실행되는 함수 설정
+	    	        
+	    	    	if (xhr.readyState === 4 && xhr.status === 200) {	// xhr.readyState === 4: 요청 완료 성공적으로 요청 처리
+	    	            var result = JSON.parse(xhr.responseText);		// xhr.status === 200: 성공적으로 요청 처리
+	    	            if (result.valid) {
+	    	                // 사용 가능한 email인 경우
+	    	                document.getElementById('emailError').textContent = '사용 가능한 이메일입니다';	 
+	    	                document.getElementById('emailError').style.color = 'green';		// 초록색으로 글자색 변경
+	    	            } else {
+	    	                // 사용 불가능한 email인 경우
+	    	                document.getElementById('emailError').textContent = '이미 사용중인 이메일입니다';
+	    	                document.getElementById('emailError').style.color = 'red';		// 빨간색으로 글자색 변경
+	    	            }
+	    	        }
+	    	    };
+	    	    xhr.send('email=' + encodeURIComponent(email));	// 실제로 서버에 보낼 데이터
+			}
+    	});
+    	
+    	// AJAX를 이용해 닉네임 사용 가능 여부 검사(비동기적) 코드
+    	// id가 unameCheck인 HTML요소를 클릭하는 경우 함수 실행
+		document.getElementById('unameCheck').addEventListener('click', function() {
+    	    var uname = document.getElementById('uname').value;	// id가 uname인 요소의 값을 uname변수에 저장
+		    var unameError = document.getElementById('unameError');
+		    
+		    if(uname === ""){
+    			// 입력이 안된 경우
+    			unameError.textContent = '필수 입력입니다';
+    			unameError.style.color = 'red';
+    		}else if(unameError.textContent === ""){	// 닉네임에 대한 에러 메시지가 없는 경우
+	    	    var xhr = new XMLHttpRequest();		// XMLHttpRequest객체: 서버와 비동기 통신을 가능하게 해주는 객체
+	    	    
+	    	    xhr.open('POST', '/checkUname', true);	// 서버에 POST요청 보낼 준비 => HTTP 요청을 초기화하는 역할 / 마지막 인수: 비동기적으로 요청 처리할지 여부
+	    	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');	// HTTP 요청 헤더 설정/Content-Type 헤더를 두번째 인수 값으로 설정
+	    	    xhr.onreadystatechange = function () {	// 요청의 상태가 변경될 때마다 실행되는 함수 설정
+	    	        
+	    	    	if (xhr.readyState === 4 && xhr.status === 200) {	// xhr.readyState === 4: 요청 완료 성공적으로 요청 처리
+	    	            var result = JSON.parse(xhr.responseText);		// xhr.status === 200: 성공적으로 요청 처리
+	    	            if (result.valid) {
+	    	                // 사용 가능한 uname인 경우
+	    	                document.getElementById('unameError').textContent = '사용 가능한 닉네임입니다';	 
+	    	                document.getElementById('unameError').style.color = 'green';		// 초록색으로 글자색 변경
+	    	            } else {
+	    	                // 사용 불가능한 uname인 경우
+	    	                document.getElementById('unameError').textContent = '이미 사용중인 닉네임입니다';
+	    	                document.getElementById('unameError').style.color = 'red';		// 빨간색으로 글자색 변경
+	    	            }
+	    	        }
+	    	    };
+	    	    xhr.send('uname=' + encodeURIComponent(uname));	// 실제로 서버에 보낼 데이터
+			}
+    	});
+    	
+    	// id가 signUpForm인 <form>의 submit 버튼 클릭한 경우, 유효성 여부에 따른 버튼 활성화 코드
+    	document.getElementById('signUpForm').addEventListener('submit', function(event) {
+    		var emailError = document.getElementById('emailError');		// 이메일 에러 메시지
+    		var unameError = document.getElementById('unameError');		// 닉네임 에러 메시지
+    		var passwordError = document.getElementById('passwordError');	// 비밀번호 에러 메시지
+    		var passwordCheckError = document.getElementById('passwordCheckError');	// 비밀번호 확인 에러 메시지
+    		
+    		var email = document.getElementById('email');		// 이메일 
+    		var uname = document.getElementById('uname');		// 닉네임 
+    		var password = document.getElementById('password');	// 비밀번호 
+    		var passwordCheck = document.getElementById('passwordCheck');	// 비밀번호 확인 
+    		
+    		// 이메일 입력이 없는 경우
+			if(email.value === ""){
+				emailError.textContent = '필수 입력입니다';
+				emailError.style.color = 'red';	
+			}
+			// 닉네임 입력이 없는 경우
+			if(uname.value === ""){
+				unameError.textContent = '필수 입력입니다';
+				unameError.style.color = 'red';	
+			}
+			// 비밀번호 입력이 없는 경우
+			if(password.value === ""){
+				passwordError.textContent = '필수 입력입니다';
+				passwordError.style.color = 'red';	
+			}
+			// 비밀번호 확인 입력이 없는 경우
+			if(passwordCheck.value === ""){
+				passwordCheckError.textContent = '필수 입력입니다';
+				passwordCheckError.style.color = 'red';	
+			}
+    		
+    		if((emailError.textContent !== '사용 가능한 이메일입니다') || (unameError.textContent !== '사용 가능한 닉네임입니다') || 
+    				(passwordError.textContent !== "") || (passwordCheckError.textContent !== '비밀번호가 일치합니다')){
+    			// 하나라도 유효성 검사를 통과하지 못한 경우
+				event.preventDefault();  // 폼 제출 중지(이벤트 발생할 때마다 해당 이벤트에서만 실행)
+    		}
+		
+		});
+
+    </script>
+</body>
+</html>

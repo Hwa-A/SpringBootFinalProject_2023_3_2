@@ -1,5 +1,6 @@
 package com.finalproject.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,9 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +35,8 @@ public class Member {
 	private String password;	// 회원 비밀번호
 	@Column(columnDefinition = "VARCHAR(5) default 'USER'")
 	private String role;	// 회원 권한(default: USER)
+	
+	
+	
+	
 }
