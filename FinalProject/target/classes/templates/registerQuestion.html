@@ -1,73 +1,623 @@
+
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>질문 등록</title>
-<style type="text/css">
-	*{padding:0; margin:0}
-	ul, ol {list-style:none}
+<<<<<<< HEAD
+<title>로그인</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap');
+
+:root{
+ --main-color:#8DD4FF;
+ --other-color:rgb(232, 244, 251);
+ --main-color-op:#8DD4FF64;
+ --red-color-op:rgba(250, 193, 248, 0.894);
+ 
+}
+
+@keyframes rotation{
+  0%{
+    transform:rotateY(0deg);
+  }
+  100%{
+    transform:rotateY(360deg);
+  }
+}
+
+@keyframes move{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-6px);
+  }
+}
+
+@keyframes cursor-move{
+  10%,100%{
+    transform:translate(0px,0px);
+  }
+  25%,35%{
+    transform:translate(-200px,-100px);
+  }
+  50%,60%{
+    transform:translate(-500px,60px);
+  }
+  75%,85%{
+    transform:translate(-400px,320px);
+  }
+}
+
+html,body,.container{
+  margin:0;
+  padding:0;
+  height:100vh;
+}
+
+body{
+  background:#000;
+}
+
+h1{
+  margin:0;
+  padding:2px 8px;
+  font-family:'Chakra Petch',monospace;
+  font-size:16px;
+  font-weight:bold;
+  color:var(--main-color);
+}
+
+p{
+  margin:0;
+  padding:0 24px;
+  font-family:'Chakra Petch',monospace;
+  font-family:16px;
+  color:var(--main-color);
+  width:315px;
+}
+
+span{
+  font-weight:bold;
+  transition: 0.2s ease-in-out;
+}
+
+a{
+  margin:0;
+  padding:0;
+  width:16px;
+  justify-self:center;
+  align-self:center;
+  text-decoration:none;
+  transform:translatey(2px);
+}
+
+svg{
+  color:var(--main-color);
+}
+ul, ol {list-style:none}
 	a{text-decoration: none; color: #fff; font-size: 15px}
-	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
 	
-	#nav>a {
-	  display: block; /* a태그는 글자성격 = inline */
-	  float: left;
-	  font-size: 30px;
-	  font-weight: 900;
-	  line-height: 80px;
-	  padding: 0 30px;
-	}
-	#nav>ul {
-	  float: right;
-	}
-	#nav>ul li {
-	  float: left;
-	  padding: 0 30px;
-	  line-height: 80px;
-	}
+.screen-container:before{
+  margin:0;
+  padding:0;
+  content:"";
+  display:grid;
+  position:absolute;
+  inset:0;
+  height:100%;
+  width:100%;
+  background-image:url(https://as1.ftcdn.net/v2/jpg/05/49/29/70/1000_F_549297047_fxiIUIxD1AM6Iaw3GjQQ9ZBRrHJQm21q.jpg);
+  background-size:20%;
+  opacity:4%;
+}
+
+.container{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  transform-style: preserve-3d;
+}
+
+.screen-container{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  height:480px;
+  width:800px;
+  background-image:url(https://i.gyazo.com/687bd077ff3de4fc6a6ba5e20da3e629.png);
+  box-shadow:0 0 128px var(--main-color-op);
+}
+
+/* y2kcodepen 창모양 */
+.main-window-container{
+  display:grid;
+  height:352px;
+  width:576px;
+  background:#0006;
+  border: 2px solid var(--main-color);
+  backdrop-filter:blur(8px);
+  transform:translate(0,9px);
+}
+/*  y2kcodepen 제목 */
+.top-window{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  height:24px;
+  width:576px;
+  background:#0006;
+  border-bottom:2px solid var(--main-color);
+}
+
+.cat{
+  display:grid;
+  height:26px;
+  z-index:2;
+  width:27px;
+  transform:translate(26px,50px);
+}
+
+.sleep-cat{
+  display:grid;
+  z-index:2;
+  height:21px;
+  width:25px;
+  transform:translate(400px,126px);
+}
+
+.top-buttons{
+  display:grid;
+  height:16px;
+  width:56px;
+  transform:translate(223px,4px);
+}
+
+.links{
+  text-decoration:none;
+  color: var(--main-color);
+  font-weight:bold;
+  transition: 0.2s ease-in-out;
+  cursor:pointer;
+}
+
+.links:hover{
+  filter:drop-shadow(0px 0px 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+.error-message{
+display: block;
+    position: relative;
+    left: 370px;
+    top: -4px;
+    font-size: 7px;
+    color: rgba(237, 36, 36, 0.593);
+    font-family:'Chakra Petch',monospace;
+    filter:drop-shadow(0px 0px 4px var(--main-color));
+}
+
+
+
+.cursor{
+  display:grid;
+  z-index:20;
+  height:24px;
+  width:24px;
+  transform:translate(614px,-289px);
+}
+
+.cursor-svg{
+  transition: 0.2s ease-in-out;
+  animation:cursor-move 6s ease-in-out infinite 6s;
+}
+
+.cursor-svg:hover{
+  filter:drop-shadow(0 0 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+.left-window-container{
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-rows:repeat(2,26px);
+  height:128px;
+  width:160px;
+  justify-content:center;
+  align-items:center;
+  transform:translate(496px,-226px);
+  background:red;
+}
+
+.left-window-container:after{
+  content:"";
+  display:grid;
+  z-index:-1;
+  height:128px;
+  width:160px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 20%,#000 20% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(-16px,-38px);
+}
+
+.main-left-window{
+  display:grid;
+  height:128px;
+  width:160px;
+  background:#000;
+  border: 2px solid var(--main-color);
+  transform:translateY(24px);
+}
+
+.top-left-window{
+  display:grid;
+  z-index:2;
+  height:23px;
+  width:160px;
+  background:#0006;
+  border-bottom:2px solid var(--main-color);
+  transform:translate(2px,-3px);
+}
+
+
+.clippy{
+  display:grid;
+  z-index:2;
+  height:96px;
+  width:56px;
+  transform:translate(500px,228px);
+}
+
+.clippy-svg{
+  transition: 0.2s ease-in-out;
+  animation: move 1s ease-in-out infinite;
+}
+
+.clippy-svg:hover{
+  transform:scale(1.2) translateY(-12px) rotate(2deg);
+  filter:drop-shadow(0px 0px 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+
+.top-right-buttons{
+  display:grid;
+  height:16px;
+  width:56px;
+  transform:translate(-4px);
+}
+
+.main-right-window{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  height:56px;
+  width:112px;
+}
+
+.eyes{
+  display:grid;
+  z-index:20;
+  height:44px;
+  width:54px;
+  transform:translate(0px,-1px);
+}
+
+.eye{
+  transition: 0.2s ease-in-out;
+}
+
+.eye:hover{
+  filter:drop-shadow(0px 0px 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+.windows-container{
+  display:grid;
+  align-items:center;
+  justify-content:end;
+  height:112px;
+  width:145px;
+  transform:translate(-54px,-383px);
+}
+
+.square{
+  display:grid;
+  z-index:-1;
+  height:80px;
+  width:112px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(-29px,-56px);
+}
+
+.square:after{
+  content:"";
+  display:grid;
+  z-index:-1;
+  height:80px;
+  width:112px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(12px,-16px);
+}
+
+
+.welcome-msg-p
+{
+  position: absolute;
+  top: -23px;
+  left:40px;
+  width: inherit;
+  font-size: 13px;
+  
+}
+
+.logout-btn
+{
+  cursor:pointer;
+  position: absolute;
+  top: -24px;
+  right: 4px;
+  font-size: 10px;
+  color: #3a6e9b;
+  font-family:'Chakra Petch',monospace;
+  width: 50px;
+  cursor: pointer;
+  background-color: white;
+  border: none;  
+  padding: 2px;
+   filter:drop-shadow(0 0 4px var(--main-color));
+}
+.logout-btn:hover
+{
+  filter:drop-shadow(0 0 40px var(--red-color-op));
+
+}
+.btns
+{
+	cursor:pointer;
+    color: #90B5D6;
+    width: 60px;
+    background-color: white;
+    border: none;   filter:drop-shadow(0 0 4px var(--main-color));
+}
+
+
+
+
+.list-ul
+{
+  position: absolute;
+  top: -100px;
+  left: 316px;
+  font-size: 10px;
+  float: right;
+}
+.list-ul a{
+  font-size: 10px;
+  background-color: white;
+  color: #3a6e9b;
+  padding:2px;
+  border: none;  
+   filter:drop-shadow(0 0 4px var(--main-color));
+}
+.list-ul li{
+  float: left;
+  line-height: 150px;
+	padding: 0 5px;
+}
+.list-ul li:hover
+{
+  filter:drop-shadow(0 0 2px var(--red-color-op));
+
+}
+.insert-q-form
+{
+  position:relative;
+  top: -2px;
+} 
+.insert-q-table
+{
+  position: relative;
+  left: 120px;
+  top: -50px;
+  color: black;
+} 
+
+.q-content
+{
+  margin-bottom: 8px;
+  height: 100px;
+  padding-left: 10px;
+  width: 300px;
+  color: black;
+
+
+}
+.q-title
+{
+  color: black;
+  margin-bottom: 8px;
+  padding-left: 10px;
+  width: 300px;
+
+}
+.insert-q-select
+{
+  padding-left: 10px;
+  width: 316px;
+  background-color: white;
+  border: none;   filter:drop-shadow(0 0 4px var(--main-color));
+}
+
+.insert-q-table input,textarea
+{
+  font-family:'Chakra Petch',monospace;
+
+      filter:drop-shadow(0 0 6px var(--other-color));
+      border: none; /* 선 제거 */
+      border-bottom: 1.2px solid #90B5D6; /* 아래에 선 추가 */
+      color: black;
+}
+
+.question-td
+{
+      filter:drop-shadow(0 0 6px var(--other-color));
+      color: white;
+}
+.insert-q-btn
+{
+   position: relative;
+    font-size: 10px;
+    color: white;
+    width: 60px;
+    background-color: #90B5D6;
+    top: -31px;
+    left: 245px;
+    height: 20px;
+    cursor:pointer;
+    border: none;   filter:drop-shadow(0 0 4px var(--main-color));
+}
+
+
+
+    
 </style>
 </head>
 <body>
-	<!-- 네비게이션 바 -->
-	<nav id="nav">
-		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
-		<ul>
-			<li><a href="/register">질문하기</a></li>
-			<li><a href="#">게시글</a></li>
-			<li><a href="#">마이페이지</a></li>
-		</ul>
-	</nav>
-	<p th:text="'환영합니다.' + ${userName ?: ''} + '님'"></p>
-	<div>
-    	<button type="button" onclick="window.location.href='/logout'">로그아웃</button>
-    </div>
-    
-    <!-- 본문 내용 -->
-    <div>
-    	<form action="/insertQuestion" method="post">
-    		<table border="1">
-    			<tr>
-    				<td><label for="title"></label></td>
-    				<td><input type="text" name="title" id="title" ></td>
-    			</tr>
-    			<tr>
-    				<td><label for="content"></label></td>
-    				<td><input type="text" name="content" id="content" ></td>
-    			</tr>
-    			<tr>
-    				<td><label for=""></label></td>
-    				<td>
-    					<select name="language" id="language">
-    						<option value="c#" selected>C#</option>
-        					<option value="python">Python</option>
-        					<option value="java">Java</option>
-        					<option value="기타">기타</option>
-    					</select>
-    				</td>
-    			</tr>
-    		</table>
-    		<button type="submit">등록</button>
-    	</form>
-    </div>
+    <div class="container">
+        <div class="screen-container">
+            <div class="cat">
+                    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 0H16V1H15V0Z" fill="currentColor"/>
+                    <path d="M14 2V1H15V2H14Z" fill="currentColor"/>
+                    <path d="M13 4V2H14V4H13Z" fill="currentColor"/>
+                    <path d="M10 4H11V5H12V4H13V6H10V4Z" fill="currentColor"/>
+                    <path d="M9 2H10V4H9V2Z" fill="currentColor"/>
+                    <path d="M8 1H9V2H8V1Z" fill="currentColor"/>
+                    <path d="M7 1V0H8V1H7Z" fill="currentColor"/>
+                    <path d="M6 3V1H7V3H6Z" fill="currentColor"/>
+                    <path d="M5 5V3H6V5H5Z" fill="currentColor"/>
+                    <path d="M5 12H4V5H5V12Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12H5V13H6V14H7V15H9V16H8V17H7V18H6V20H5V19H3V20H2V21H1V24H0V26H11V25H12V26H26V25H27V24H26V23H22V21H21V20H20V19H18V20H17V18H16V17H15V16H14V15H16V14H17V13H18V12H19V5H18V3H17V1H16V3H17V5H18V12H17V11H14V12H17V13H16V14H13V16H14V17H15V18H16V21H15V25H13V24H12V20H11V24H10V25H8V21H7V18H8V17H9V16H10V14H7V13H6V12ZM21 24V25H16V22H17V21H18V20H20V21H21V23H19V24H21ZM23 24V25H26V24H23ZM2 21V23H4V24H2V25H7V22H6V21H5V20H3V21H2Z" fill="currentColor"/>
+                    <path d="M6 12V11H9V12H6Z" fill="currentColor"/>
+                    <path d="M12 11H11V12H12V11Z" fill="currentColor"/>
+                    <path d="M8 7H9V10H8V7Z" fill="currentColor"/>
+                    <path d="M15 7H14V10H15V7Z" fill="currentColor"/>
+                    </svg>
+            </div>
+
+            <div class="sleep-cat">
+                <svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0H2V1H6V2H4V4H2V5H8V4H5V3H6V2H7V1H8V0Z" fill="currentColor"/>
+                <path d="M18 3H19V4H18V3Z" fill="currentColor"/>
+                <path d="M17 5H18V4H17V5Z" fill="currentColor"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 9V10H15V8H16V6H17V5H14V4H15V3H16V2H12V3H14V4H13V5H12V6H11V5H10V6H9V7H8V8H5V9H3V10H2V12H1V13H0V18H1V19H2V20H7V21H15V20H17V21H24V20H25V15H24V12H23V9H22V8H21V7H20V4H19V9H20V10H21V16H20V17H18V18H17V17H16V18H9V17H8V14H7V10H8V8H9V7H10V6H11V8H12V9H13ZM13 9V8H14V9H13ZM7 10H6V14H7V17H8V18H9V19H14V20H8V19H2V18H1V13H2V12H3V10H5V9H7V10ZM20 18V17H21V18H20ZM22 16V17H21V16H22ZM23 16H22V13H23V16ZM23 16H24V19H23V20H21V19H22V18H23V16ZM20 18H18V20H20V18ZM21 9H22V10H21V9ZM21 9H20V8H21V9ZM12 6V7H15V6H12Z" fill="currentColor"/>
+                <path d="M18 15H17V16H18V15Z" fill="currentColor"/>
+                <path d="M19 14H18V15H19V14Z" fill="currentColor"/>
+                <path d="M19 14H20V13H19V14Z" fill="currentColor"/>
+                <path d="M14 16H15V17H14V16Z" fill="currentColor"/>
+                <path d="M12 15H14V16H12V15Z" fill="currentColor"/>
+                <path d="M12 15H9V14H12V15Z" fill="currentColor"/>
+                </svg>
+             </div>
+
+
+          <div class="main-window-container">
+            
+                <div class="top-window">
+                        <div class="title">
+                            <a href="index.html" class="links"><h1>spring final pj</h1></a>
+                            
+                        </div>
+                        <div class="top-buttons">
+                            <svg width="56" height="16" viewBox="0 0 56 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M52 5.00195L51 4.00195L48 7.00195L45 4.00195L44 5.00195L47 8.00195L44 11.002L45 12.002L48 9.00195L51 12.002L52 11.002L49 8.00195L52 5.00195Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M40 0H56V16H40V0ZM41 1V15H55V1H41Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16V16H0V0ZM1 1V15H15V1H1Z" fill="currentColor"/>
+                            <path d="M3.5 11.5H12.5V12.5H3.5V11.5Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H36V16H20V0ZM21 1V15H35V1H21Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M31 5.00195H25V11.002H31V5.00195ZM24 4.00195V12.002H32V4.00195H24Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+
+                      
+                </div>
+
+                    <!-- 메인윈도우 -->
+                <div class="main-window">
+
+
+
+
+
+                  
+                  <div class="clippy"><svg class="clippy-svg" width="46" height="96" viewBox="0 0 56 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.4568 3.28636C25.7484 0.671406 29.9112 -0.867574 34.3852 0.523319C34.5964 0.588927 34.8058 0.662033 35.0132 0.740763C35.1754 0.802622 35.3357 0.86823 35.495 0.937588C35.8759 1.10255 36.2512 1.29 36.6199 1.50369L36.9508 1.70052C41.2702 4.37546 42.7166 8.88742 42.9221 13.4144C43.0862 17.0547 42.4677 20.9556 41.7171 24.4609C46.0723 25.7787 49.2414 29.8033 49.2414 34.5627C49.2414 40.3925 44.4864 45.12 38.6207 45.12C38.5264 45.12 38.4321 45.1163 38.3388 45.1163C38.2143 51.5927 38.599 57.5818 38.996 61.119L38.9997 61.1584L39.0082 61.2259C39.144 62.4518 39.2694 63.5578 39.3477 64.5738C39.5061 66.6282 39.5061 68.5796 38.748 70.2685C37.9362 72.0793 36.4228 73.2547 34.3522 74.1526L34.1853 74.2257L34.0071 74.265C30.8428 74.9773 28.1603 74.0813 26.0907 72.1712C24.1134 70.3435 22.7575 67.663 21.8373 64.7968C19.9921 59.0496 19.6479 51.7708 20.2796 46.4434C20.3296 46.0254 20.5106 45.6561 20.7775 45.3693C21.1037 45.0188 21.5572 44.792 22.0542 44.7545C22.1748 44.7451 22.2984 44.747 22.4238 44.762C23.4826 44.8876 24.2407 45.8417 24.1153 46.8933C23.5335 51.797 23.872 58.5078 25.5164 63.629C26.3424 66.199 27.4343 68.171 28.7194 69.3575C29.8745 70.4241 31.2209 70.9059 32.9794 70.5572C34.422 69.9049 34.9547 69.2994 35.2206 68.7052C35.3809 68.3472 35.4875 67.9067 35.5365 67.3162C35.5884 66.692 35.5761 65.9009 35.4969 64.8681C35.4479 64.2345 35.3753 63.5315 35.2904 62.7592L35.1735 61.7132C34.7662 58.0917 34.357 51.2872 34.5135 44.3008C30.6872 42.7037 28 38.9453 28 34.5627C28 28.9879 32.3486 24.4197 37.8588 24.0317C38.6198 20.5488 39.2138 16.8822 39.0639 13.5868C38.8866 9.67847 37.6948 6.68299 34.9085 4.95843C34.356 4.61539 33.7997 4.36421 33.2321 4.188C30.377 3.29948 27.5286 4.17113 24.8677 6.28559C23.3393 7.4984 21.9419 9.07675 20.753 10.8182C19.8591 12.1266 19.0831 13.5287 18.4599 14.9384C18.1393 15.6619 17.8206 16.4117 17.5066 17.1915C17.3407 17.6039 17.1756 18.0238 17.0116 18.4512C19.581 20.3782 21.2414 23.4393 21.2414 26.8847C21.2414 32.1521 17.3595 36.5197 12.283 37.3126C11.4353 43.8585 11.2798 51.1016 12.2745 58.8359L12.2811 58.8846L12.2849 58.9315C12.7262 64.6244 14.4677 73.1366 18.1902 80.1379C21.9155 87.1448 27.5012 92.2192 35.2914 92.1386C38.4029 92.3279 40.2623 91.2763 41.5455 89.5124C42.9438 87.5891 43.7755 84.6461 44.2233 80.8971C44.4327 79.1444 44.5524 77.2793 44.6222 75.3447C44.6561 74.4019 44.6778 73.4421 44.6929 72.4711C44.7061 71.607 44.7146 70.7334 44.7202 69.8524L44.7287 67.9835C44.7363 66.2665 44.7438 64.5381 44.7778 62.8417C44.7947 61.9869 44.8192 61.1415 44.8532 60.3092C44.8975 59.2408 44.9588 58.1948 45.0436 57.1825C45.07 56.8639 45.0993 56.5471 45.1313 56.234C45.7169 50.5017 47.8195 45.4031 53.0346 42.1152C53.9351 41.5472 55.1278 41.8115 55.6992 42.7075C56.2706 43.6016 56.0038 44.7882 55.1033 45.3562C51.2243 47.8024 49.4865 51.604 48.9736 56.6221C48.6247 60.0374 48.6078 63.9664 48.5908 68.0735L48.588 68.679C48.5766 71.1646 48.5597 73.7045 48.4541 76.1752C48.3777 77.9503 48.2561 79.6918 48.0581 81.3488C47.5894 85.2722 46.6664 89.0231 44.675 91.7599C42.5799 94.6429 39.4363 96.2175 35.1254 95.9757C25.2883 96.0451 18.805 89.5086 14.776 81.9318C10.7461 74.3531 8.91312 65.3161 8.43791 59.2764C7.4243 51.3622 7.56196 43.9409 8.40302 37.2114C3.60183 36.1973 0 31.959 0 26.8847C0 21.0549 4.75498 16.3274 10.6207 16.3274C11.6324 16.3274 12.6121 16.468 13.5389 16.7304C13.9925 15.5626 14.4573 14.4472 14.925 13.39C16.5665 9.68597 19.1831 5.88632 22.4568 3.28636ZM12.5517 33.603C16.2846 33.603 19.3103 30.5944 19.3103 26.8847C19.3103 23.175 16.2846 20.1664 12.5517 20.1664C8.81883 20.1664 5.7931 23.175 5.7931 26.8847C5.7931 30.5944 8.81883 33.603 12.5517 33.603ZM44.4138 34.5627C44.4138 38.2724 41.1721 41.281 37.1724 41.281C33.1727 41.281 29.931 38.2724 29.931 34.5627C29.931 30.853 33.1727 27.8444 37.1724 27.8444C41.1721 27.8444 44.4138 30.853 44.4138 34.5627Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21.2088 12.3117C17.7224 11.04 15.1175 11.555 13.8419 12.186C12.4098 12.8945 10.671 12.3147 9.95824 10.8911C9.24551 9.46746 9.82873 7.73905 11.2609 7.03057C14.0815 5.63526 18.3523 5.13577 23.2044 6.90559C24.7062 7.45338 25.4769 9.10763 24.9259 10.6005C24.3748 12.0933 22.7106 12.8594 21.2088 12.3117Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M44.5665 22.2458C42.0407 19.373 39.4395 18.7832 37.9743 18.8785C36.378 18.9824 34.9993 17.7803 34.8948 16.1935C34.7903 14.6067 35.9997 13.2362 37.596 13.1323C40.9928 12.9113 45.3046 14.3346 48.9285 18.4563C49.9812 19.6536 49.8582 21.4726 48.6536 22.519C47.4491 23.5654 45.6192 23.4431 44.5665 22.2458Z" fill="currentColor"/>
+                    </svg>
+                    </div>
+
+                    <p class="welcome-msg-p" th:text="'환영합니다. ' +  ${userName} + '님'"></p>
+                    <div>
+                      <button class="logout-btn" type="button" onclick="window.location.href='/logout'">logout</button>
+                    </div>
+                    <nav id="nav">
+                      <ul class="list-ul">
+                        <li><a href="/register">질문하기</a></li>
+                        <li><a href="/home">게시글</a></li>
+                        <li><a href="#">마이페이지</a></li>
+                      </ul>
+                    </nav>
+                    <form action="/insertQuestion" method="post" class="insert-q-form">
+                      <table border="0" class="insert-q-table">
+                        <th>
+                            <td class="question-td">Question?</td>
+                        </th>
+                        <tr>
+                          <td><label for="title"></label></td>
+                          <td><input type="text" name="title" id="title" placeholder="title" class="q-title"></td>
+                        </tr>
+                        <tr>
+                          <td><label for="content"></label></td>
+                          <td><textarea name="content" id="content" placeholder="content" class="q-content"></textarea></td>
+                        </tr>
+                        <tr>
+                          <td><label for=""></label></td>
+                          <td>
+                            <select name="language" id="language" class="insert-q-select">
+                              <option value="c#" selected>C#</option>
+                                <option value="python">Python</option>
+                                <option value="java">Java</option>
+                                <option value="기타">기타</option>
+                            </select>
+                          </td>
+                        </tr>
+                      </table>
+                      <button type="submit" class="insert-q-btn">등록</button>
+                    </form>
+
+
+                </div>
+          </div>
+
+
+
+              <div class="cursor">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" class="cursor-svg">
+                  <text x="50" y="60" font-size="36" text-anchor="middle" fill="#68a7de">❔</text>
+                </svg>
+              </div>
+          
+          </div>
+        </div>
+      </div>
+
+
 </body>
 </html>
