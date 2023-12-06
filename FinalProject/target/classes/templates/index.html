@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,8 +8,6 @@
 
 :root{
  --main-color:#8DD4FF;
- --warning-color:#069cf964;
- --other-color:rgb(232, 244, 251);
  --main-color-op:#8DD4FF64;
 }
 
@@ -184,7 +181,34 @@ svg{
 }
 
 
+.first-p{
+  transform:translate(40px,27px);
+}
 
+.second-p{
+  width:355px;
+  transform:translate(84px,-45px);
+}
+
+.logo{
+  margin:0;
+  padding:0;
+  width:74px;
+  height:96px;
+  cursor: pointer;
+  transform:translate(407px,-58px); 
+}
+
+.rotate{
+  transition: 0.2s ease-in-out;
+}
+
+.rotate:hover{
+  scale:1.1;
+  filter:drop-shadow(0 0 8px var(--main-color));
+  animation: rotation 4s linear infinite reverse;
+  transition: 0.2s ease-in-out;
+}
 
 .cursor{
   display:grid;
@@ -201,6 +225,35 @@ svg{
 
 .cursor-svg:hover{
   filter:drop-shadow(0 0 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+.social-container{
+  display:grid;
+  grid-template-columns:repeat(4,48px);
+  justify-content:center;
+  transform:translate(20px,-2px);
+}
+
+.social h6{
+    color:#90B5D6;
+}
+
+.social h6:hover{
+    transform:scale(1.2) rotate(-2deg);
+    filter:drop-shadow(0px 0px 4px var(--main-color));
+    transition: 0.2s ease-in-out;
+    
+    
+}
+
+.icon{
+  transition: 0.2s ease-in-out;
+}
+
+.icon:hover{
+  transform:scale(2) rotate(-5deg);
+  filter:drop-shadow(0px 0px 4px var(--main-color));
   transition: 0.2s ease-in-out;
 }
 
@@ -356,100 +409,23 @@ svg{
   transform:translate(12px,-16px);
 }
 
-
-
-.error-message{
-    position: absolute;
-    left: 135px;
-    top: 260px;
-    width: 300px;
-    font-size: 7px;
-    background: white;
-    font-weight: bold;
-    font-size:8px;
-    z-index: 30;
-    text-align: center;
-    color: rgba(245, 245, 245, 0.593);
-    font-family:'Chakra Petch',monospace;
-    filter:drop-shadow(0px 0px 4px var(--warning-color));
+.counter-km{
+  display:grid;
+  height:32px;
+  width:39px;
+  transform:translate(515px,-36px);
 }
 
-.signup-txt{
-        transform:translate(225px,-90px);
-        font-weight: bold;
-        }       
+.km{
+ transition: 0.2s ease-in-out; 
+}
 
-    
-   .signup-input
-    {
-      position: absolute;
-      left: 210px;
-      text-align: center;
-        filter:drop-shadow(0 0 4px var(--other-color));
-        border: none; /* 선 제거 */
-        border-bottom: 1.2px solid #90B5D6; /* 아래에 선 추가 */
-        background: transparent; /* 배경 없애기 */
-        outline: none; /* 포커스 효과 제거 (선택사항) */
-        color: white;
-        font-family:'Chakra Petch',monospace;
-    }  
-    .signup-label{
-      position: absolute;
-      left: 160px;
-      font-size: 10px;
-        filter:drop-shadow(0 0 4px var(--other-color));
-        border: none; /* 선 제거 */
-        background: transparent; /* 배경 없애기 */
-        outline: none; /* 포커스 효과 제거 (선택사항) */
-        color: white;
-        font-family:'Chakra Petch',monospace;
-        height: 300px;
-    }
+.km:hover{
+  transform:scale(1.2);
+  filter:drop-shadow(0px 0px 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
 
-    .chk-btns
-    {
-        position: absolute;
-        left: 380px;
-        cursor: pointer;
-        color: #90B5D6;
-        font-size: 10px;
-        width: 40px;
-        background-color: white;
-        font-family:'Chakra Petch',monospace;
-        border: none;   filter:drop-shadow(0 0 4px var(--main-color));
-    }
-    .btns
-    {
-      font-family:'Chakra Petch',monospace;
-        cursor: pointer;
-        color: #90B5D6;
-        font-size: 10px;
-        width: 60px;
-        background-color: white;
-        border: none;   filter:drop-shadow(0 0 4px var(--main-color));
-    }
-    .login-btn
-    {
-        cursor: pointer;
-        font-family:'Chakra Petch',monospace;
-        position: absolute;
-        left: 195px;
-        top: 240px;
-    }
-    .signup-btn
-    {
-        cursor: pointer;
-        position: absolute;
-        left: 300px;
-        top: 240px;
-
-
-    }
-
-	#passwordError
-	{
-	 z-index: 300;
-	}	
     
 </style>
 </head>
@@ -507,50 +483,114 @@ svg{
                             <path d="M3.5 11.5H12.5V12.5H3.5V11.5Z" fill="currentColor"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H36V16H20V0ZM21 1V15H35V1H21Z" fill="currentColor"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M31 5.00195H25V11.002H31V5.00195ZM24 4.00195V12.002H32V4.00195H24Z" fill="currentColor"/>
-                            </svg>
+                            </svg>                            
                         </div>
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100">
+  								<!-- 집의 지붕 -->		
+							
+							</svg>
                 </div>
 
                 <!-- 메인윈도우 -->
              <div class="main-window">
-                        <p class="signup-txt"> Sign-Up</p>
-                        <form id="signUpForm" action="/signUp" method="post" class="signup-form">
-                              <div>
-                                    <label for="email" style="top: 138px;" class="signup-label" >EMAIL</label>
-                                    <input type="text" style="top: 130px;"name="email" class="signup-input" id="email" oninput="checkEmailInput(this)" 
-                                    placeholder="Email" > 
-                                    <button type="button" style="top: 137px;" id="emailCheck" class="chk-btns">check</button>
-                                  <span id="emailError" class="error-message"></span>
-                              </div>
+                        <p class="first-p">202107006 <span>홍서빈</span> 20210700? <span>조성은</span> <a href="https://github.com/Hwa-A/SpringBootFinalProject_2023_3_2" class="links" style="color: rgb(246, 220, 235);">github address</a>
+                        you can see our project in this GIT address</p>
+                                <a href="signup.html">
+                                      <div class="logo">
+                                        <svg class="rotate" width="174" height="96" viewBox="0 0 174 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g transform="translate(0.000000,86.000000) scale(0.100000,-0.100000)"fill="#90B5D6" stroke="none">
+                                            <path d="M497 834 c-1 -1 -31 -4 -67 -7 -207 -19 -350 -109 -380 -241 -20 -92
+                                            17 -185 115 -281 109 -108 295 -199 510 -250 328 -78 609 -45 744 87 117 114
+                                            104 245 -41 399 -120 128 -121 129 -151 129 -15 0 -41 7 -57 15 -16 8 -68 31
+                                            -115 50 -48 19 -98 44 -112 55 -14 11 -37 20 -52 20 -14 1 -37 7 -51 14 -15 9
+                                            -32 11 -46 6 -12 -5 -25 -6 -28 -3 -4 5 -263 11 -269 7z m257 -39 c6 -17 36
+                                            -21 36 -5 0 16 40 11 47 -6 11 -28 -13 -39 -49 -21 -20 10 -37 12 -42 7 -6 -6
+                                            -15 -5 -23 1 -9 8 -61 10 -161 7 -135 -5 -154 -8 -235 -38 -112 -41 -130 -60
+                                            -171 -178 -52 -149 130 -334 425 -433 129 -43 236 -60 379 -60 220 1 363 59
+                                            421 172 39 78 12 183 -70 272 -23 24 -41 47 -41 51 0 38 139 -97 170 -166 21
+                                            -47 26 -112 10 -152 -15 -40 -80 -106 -129 -131 -202 -102 -533 -91 -826 26
+                                            -355 143 -514 388 -348 540 92 86 195 114 415 114 87 0 158 3 158 8 0 13 28 7
+                                            34 -8z m160 -21 c20 -8 21 -38 1 -54 -29 -24 -60 21 -33 48 14 14 12 14 32 6z
+                                            m-169 -37 c46 -8 111 -30 126 -44 12 -9 28 -12 50 -8 36 6 83 -9 176 -58 77
+                                            -40 98 -87 39 -87 -58 0 -86 16 -86 48 0 17 -9 37 -22 49 -22 20 -33 21 -363
+                                            19 -358 -1 -399 0 -389 16 10 15 93 48 159 64 53 12 238 13 310 1z m300 -30
+                                            c96 -39 184 -89 167 -95 -7 -2 -40 12 -75 31 -34 19 -90 45 -125 57 -60 22
+                                            -88 40 -60 40 7 0 49 -15 93 -33z m243 -107 c13 0 11 -5 -10 -23 -14 -12 -28
+                                            -29 -31 -37 -4 -11 -7 -9 -12 7 -4 12 -16 25 -26 28 -23 8 -25 25 -4 25 9 0
+                                            21 12 27 26 l12 25 13 -25 c8 -14 21 -26 31 -26z m-958 14 c0 -23 -22 -41 -45
+                                            -37 -32 7 -32 -10 0 -25 32 -15 50 -52 41 -86 -6 -24 -10 -26 -66 -26 -57 0
+                                            -60 1 -60 25 0 22 4 25 38 25 l37 1 -23 19 c-12 10 -28 20 -34 22 -12 4 -21
+                                            66 -12 80 6 9 124 11 124 2z m70 -84 l0 -90 -30 0 -30 0 0 90 0 90 30 0 30 0
+                                            0 -90z m148 68 c-3 -20 -8 -23 -40 -20 l-38 4 0 -46 c0 -34 4 -46 15 -46 10 0
+                                            15 10 15 30 0 25 4 30 25 30 24 0 25 -3 25 -55 l0 -56 -62 3 -63 3 -3 88 -3
+                                            87 66 0 c63 0 66 -1 63 -22z m96 -18 c3 -22 11 -40 16 -40 9 0 7 27 -6 68 -2
+                                            8 7 12 26 12 l30 0 0 -90 0 -90 -30 0 c-27 0 -31 4 -41 45 -6 25 -15 42 -20
+                                            40 -4 -3 -6 -11 -4 -18 18 -60 16 -67 -15 -67 l-30 0 0 90 0 90 34 0 c31 0 34
+                                            -3 40 -40z m138 -25 c-4 -55 -2 -65 12 -65 13 0 16 12 16 65 0 63 1 65 25 65
+                                            25 0 25 -1 25 -90 l0 -91 -62 3 -63 3 -3 88 -3 87 29 0 28 0 -4 -65z m236 16
+                                            c2 -27 10 -50 20 -57 14 -10 14 -15 5 -25 -7 -7 -16 -9 -20 -5 -4 4 -1 12 7
+                                            17 12 9 12 10 -3 5 -10 -3 -34 -6 -53 -6 -31 0 -34 -3 -34 -30 0 -27 -3 -30
+                                            -30 -30 l-30 0 0 90 0 91 68 -3 67 -3 3 -44z m128 -76 c-5 -14 -9 -15 -21 -5
+                                            -12 10 -13 16 -4 27 15 18 34 1 25 -22z m-46 10 c0 -8 -6 -15 -14 -15 -17 0
+                                            -28 14 -19 24 12 12 33 6 33 -9z m100 0 c0 -8 -7 -15 -15 -15 -8 0 -15 7 -15
+                                            15 0 8 7 15 15 15 8 0 15 -7 15 -15z m105 -41 c152 -199 -19 -366 -375 -366
+                                            -128 0 -189 9 -300 44 -79 24 -222 92 -270 126 -49 36 -133 123 -125 130 9 9
+                                            43 11 238 12 179 1 208 -3 188 -23 -6 -6 -11 -50 -11 -102 0 -144 -20 -134
+                                            294 -133 l264 1 16 28 c10 16 19 62 23 109 5 74 4 83 -16 104 -20 21 -28 23
+                                            -135 21 -126 -3 -143 1 -122 30 12 17 28 19 118 20 91 1 109 4 132 23 33 25
+                                            47 21 81 -24z m-544 -129 c6 -25 15 -45 20 -45 5 0 7 6 5 13 -3 6 -7 27 -10
+                                            45 -5 30 -4 32 24 32 l30 0 0 -95 0 -95 -34 0 c-32 0 -35 2 -41 40 -10 57 -28
+                                            64 -20 7 7 -42 5 -45 -19 -49 -14 -3 -28 -3 -31 0 -3 3 -5 47 -5 99 l0 93 35
+                                            0 c33 0 35 -2 46 -45z m231 -42 c3 -49 2 -92 -2 -96 -4 -4 -36 -7 -71 -5 l-64
+                                            3 -3 79 c-2 44 -1 85 2 93 4 9 25 13 69 13 l64 0 5 -87z m76 42 c-7 -62 8 -67
+                                            16 -5 6 44 10 50 30 50 19 0 24 -8 33 -47 l10 -48 2 48 c1 46 2 47 32 47 l32
+                                            0 -7 -52 c-18 -146 -15 -138 -51 -138 -30 0 -33 3 -41 38 l-8 37 -10 -37 c-8
+                                            -34 -13 -38 -42 -38 -32 0 -33 1 -39 58 -3 31 -8 74 -11 95 -6 36 -5 37 26 37
+                                            l33 0 -5 -45z"/>
+                                            <path d="M940 560 c0 -11 5 -20 10 -20 6 0 10 9 10 20 0 11 -4 20 -10 20 -5 0
+                                            -10 -9 -10 -20z"/>
+                                            <path d="M910 280 c0 -38 4 -50 15 -50 11 0 15 12 15 50 0 38 -4 50 -15 50
+                                            -11 0 -15 -12 -15 -50z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </a>
+                    <div class="counter-km">
+                            <svg class="km" width="39" height="32" viewBox="0 0 39 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.6495 5.07837V0.658216C17.6495 0.286726 17.3471 -0.0159927 16.9759 0.000655386C12.3165 0.209591 8.85723 2.54264 7.31638 4.06286C7.06277 4.31308 7.08385 4.71837 7.34113 4.96482L10.4269 7.9208C10.6982 8.18071 11.1285 8.16544 11.4175 7.92537C13.0206 6.59371 15.5002 5.97556 17.0289 5.76929C17.3781 5.72218 17.6495 5.43058 17.6495 5.07837Z" fill="currentColor"/>
+                            <path d="M5.24867 17.6424H0.732263C0.333048 17.6424 0.021015 17.2953 0.0733197 16.8997C0.77592 11.5854 2.81894 8.56516 4.09518 7.39656C4.33365 7.1782 4.69332 7.21381 4.922 7.44239L8.05139 10.5705C8.32856 10.8476 8.30853 11.3013 8.05292 11.5983C6.75146 13.1108 6.14437 15.5177 5.94008 17.022C5.89269 17.371 5.60102 17.6424 5.24867 17.6424Z" fill="currentColor"/>
+                            <path d="M0.658528 21.1738H4.92815C5.27386 21.1738 5.5621 21.4347 5.61448 21.7763C5.86619 23.4178 6.57485 26.0607 7.99208 27.5587C8.27167 27.8542 8.31489 28.329 8.03311 28.6224L4.98544 31.7958C4.73135 32.0604 4.31131 32.0731 4.06298 31.8031C2.54198 30.1494 0.209236 26.5191 0.000649125 21.847C-0.0159199 21.4759 0.28689 21.1738 0.658528 21.1738Z" fill="currentColor"/>
+                            <path d="M38.3415 21.1738H34.0719C33.7261 21.1738 33.4379 21.4347 33.3855 21.7763C33.1338 23.4178 32.4252 26.0607 31.0079 27.5587C30.7283 27.8542 30.6851 28.329 30.9669 28.6224L34.0146 31.7958C34.2687 32.0604 34.6887 32.0731 34.937 31.8031C36.458 30.1494 38.7908 26.5191 38.9994 21.847C39.0159 21.4759 38.7131 21.1738 38.3415 21.1738Z" fill="currentColor"/>
+                            <path d="M38.2677 17.6424H33.7513C33.399 17.6424 33.1073 17.371 33.0599 17.022C32.8556 15.5177 32.2485 13.1108 30.9471 11.5983C30.6915 11.3013 30.6714 10.8476 30.9486 10.5705L34.078 7.44239C34.3067 7.21381 34.6663 7.1782 34.9048 7.39656C36.1811 8.56516 38.2241 11.5854 38.9267 16.8997C38.979 17.2953 38.667 17.6424 38.2677 17.6424Z" fill="currentColor"/>
+                            <path d="M21.3505 0.658216V5.07837C21.3505 5.43058 21.6219 5.72218 21.9711 5.76929C23.4998 5.97556 25.9794 6.59371 27.5825 7.92537C27.8715 8.16544 28.3018 8.18071 28.5731 7.9208L31.6589 4.96482C31.9161 4.71837 31.9372 4.31308 31.6836 4.06286C30.1428 2.54264 26.6836 0.209591 22.0242 0.000655386C21.6529 -0.0159927 21.3505 0.286726 21.3505 0.658216Z" fill="currentColor"/>
+                            <path class="needle" d="M23.5484 20.6584C23.0378 22.5069 21.3434 23.8644 19.3318 23.8644C16.9161 23.8644 14.9579 21.9069 14.9579 19.4922C14.9579 17.0775 16.9161 15.12 19.3318 15.12C20.2963 15.12 21.188 15.4321 21.9112 15.9608H28.2478L23.5484 20.6584Z" fill="currentColor"/>
+                            </svg>
+                    </div>
 
-                              <div>
-                                    <label for="uname" style="top: 163px;" class="signup-label">NICK</label>
-                                    <!-- oninput 속성: 사용자가 입력 필드에 어떤 값을 입력할 때마나 js함수 호출 -->
-                                    <input type="text" style="top: 155px;" name="uname" id="uname" class="signup-input" oninput="checkUnameInput(this)" placeholder="Nickname" > 
-                                    <button type="button" style="top: 162px;" id="unameCheck"  class="chk-btns">check</button>
-                                    <span id="unameError" class="error-message"></span>
-                              </div>
+                    <p class="second-p">뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나뭐라작성할까나</p>
+                    <div class="social-container">
 
-                              <div>
-                                  <label for="password" style="top: 187px;" class="signup-label">PW</label>
-                                  <input type="password" style="top: 180px;" name="password" id="password" class="signup-input"  oninput="checkPasswordInput(this)" placeholder="Password" >
-                                  <span id="passwordError" class="error-message"></span>
-                                    
-                              </div>
-
-                              <div>
-                                  <label for="passwordCheck" style="top: 211px;" class="signup-label">PW CHECK </label>
-                                  <input type="password" style="top: 205px;" name="passwordCheck" id="passwordCheck" class="signup-input" oninput="checkSamePassword(this)" placeholder="Password Check" >
-                                  <span id="passwordCheckError" class="error-message"></span>
-                              </div>
-                              <button type="submit"  class="signup-btn btns">SIGNUP</button>
-                              <button type="button" class="login-btn btns" onclick="location.href='/login'" >back</button>
-                              <!-- 현재 페이지에서 다른 페이지로 이동 형식
-                                : onclick ="location.href='index.html'" -->
-                              <!-- \': 따옴표(')를 표현하는 이스케이프 문자 -->
-                  </form>      
-            
-
+                                
+                                 <!-- login.html 대신 /login으로 변경 -->
+							<a href="/login" class="social">
+							    <h6 class="social">LOGIN</h6>
+							</a>
+							
+							<!-- signup.html 대신 /signup으로 변경 -->
+							<a href="/signUp" class="social">
+							    <h6 class="social">SIGNUP</h6>
+							</a>
+							
+							<!-- 외부 링크는 그대로 유지 -->
+							<a href="https://github.com/Hwa-A/SpringBootFinalProject_2023_3_2/network" class="social">
+							    <h6 class="social">GIT</h6>
+							</a>
+							
+							<!-- home.html 대신 /home으로 변경 
+							<a href="/home" class="social">
+							    <h6 class="social">home</h6>
+							</a>-->
+                    </div>
              </div>
           </div>
 
@@ -611,210 +651,5 @@ svg{
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-      <script type="text/javascript">
-        // 실시간으로 이메일 유효성 검사
-        function checkEmailInput(input){
-          var regExp = /^[^@]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;		// 정규 표현식
-          var emailError = document.getElementById('emailError');	
-          
-          if(input.value === ""){
-            // 입력이 안된 경우
-            emailError.textContent = '이메일 필수 입력';
-              emailError.style.color = 'red';
-          }else if(!regExp.test(input.value)){
-            // email이 유효하지 않은 경우
-            emailError.textContent = '@를 추가한 올바른 형식의 이메일 주소를 입력해주세요';
-              emailError.style.color = 'red';
-          }else{
-            // email이 유효한 경우
-            emailError.textContent = "";	// 에러 메시지 없애기
-          }
-        }
-        
-        // 실시간으로 닉네임(uname) 유효성 검사
-        function checkUnameInput(input){
-          var regExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/;		// 정규 표현식
-          var unameError = document.getElementById('unameError');	
-          
-          if(input.value === ""){
-            // 입력이 안된 경우
-            unameError.textContent = '닉네임 필수 입력';
-              unameError.style.color = 'red';
-          }else if(!regExp.test(input.value)){
-            // uname이 유효하지 않은 경우
-            unameError.textContent = '공백없이 특수문자를 제외한 2~10글자를 입력해주세요';
-              unameError.style.color = 'red';
-            } else {
-              // uname이 유효한 경우
-            unameError.textContent = "";	// 에러 메시지 없애기
-            }
-      }
-        
-        // 실시간으로 비밀번호(password) 유효성 검사
-        function checkPasswordInput(input){
-          var regExp = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9\s]).{8,16}/;		// 정규 표현식
-          var passwordError = document.getElementById('passwordError');	
-          
-          if(input.value === ""){
-            // 입력이 안된 경우
-            passwordError.textContent = '비밀번호 필수 입력';
-              passwordError.style.color = 'red';
-          }else if(!regExp.test(input.value)){
-            // password가 유효하지 않은 경우
-            passwordError.textContent = '공백없이 영문(대소문자), 숫자, 특수문자를 최소 1글자씩 포함해 8~16글자를 입력해주세요';
-            passwordError.style.color = 'red';
-            } else {
-            // password가 유효한 경우
-              passwordError.textContent = "";	// 에러 메시지 없애기
-            }
-        }
-        
-        // 실시간으로 비밀번호 확인(passwordCheck) 유효성 검사
-        function checkSamePassword(input){
-          var password = document.getElementById('password');		// password 요소 대입
-          var passwordCheck = document.getElementById('passwordCheck');		// passwordCheck 요소 대입
-          var passwordCheckError = document.getElementById('passwordCheckError');		
-          
-          if(input.value === ""){
-            // 입력이 안된 경우
-            passwordCheckError.textContent = '비밀번호 확인 필수 입력';
-              passwordCheckError.style.color = 'red';
-          }else if(password.value === input.value){
-            // 비밀번호 확인이 동일한 값인 경우
-            passwordCheckError.textContent = '비밀번호가 일치합니다';
-            passwordCheckError.style.color = 'green';
-          }else{
-            // 비밀번호 확인이 동일하지 않는 값인 경우
-            passwordCheckError.textContent = '비밀번호가 일치하지 않습니다';
-            passwordCheckError.style.color = 'red';
-          }
-        }
-        
-        // AJAX를 이용해 이메일 사용 가능 여부 검사(비동기적) 코드
-        // id가 emailCheck인 HTML요소를 클릭하는 경우 함수 실행
-        document.getElementById('emailCheck').addEventListener('click', function() {    		
-        var email = document.getElementById('email').value;		// id가 email인 요소의 값을 email변수에 저장
-        var emailError = document.getElementById('emailError');
-          
-        if(email === ""){
-            // 입력이 안된 경우
-            emailError.textContent = '이메일 필수 입력';
-            emailError.style.color = 'red';
-          }else if(emailError.textContent !== "@를 추가한 올바른 형식의 이메일 주소를 입력해주세요"){	// 이메일에 대한 에러 메시지가 없는 경우
-              var xhr = new XMLHttpRequest();		// XMLHttpRequest객체: 서버와 비동기 통신을 가능하게 해주는 객체
-              
-              xhr.open('POST', '/checkEmail', true);	// 서버에 POST요청 보낼 준비 => HTTP 요청을 초기화하는 역할 / 마지막 인수: 비동기적으로 요청 처리할지 여부
-              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');	// HTTP 요청 헤더 설정/Content-Type 헤더를 두번째 인수 값으로 설정
-              xhr.onreadystatechange = function () {	// 요청의 상태가 변경될 때마다 실행되는 함수 설정
-                  
-                if (xhr.readyState === 4 && xhr.status === 200) {	// xhr.readyState === 4: 요청 완료 성공적으로 요청 처리
-                      var result = JSON.parse(xhr.responseText);		// xhr.status === 200: 성공적으로 요청 처리
-                      if (result.valid) {
-                          // 사용 가능한 email인 경우
-                          document.getElementById('emailError').textContent = '사용 가능한 이메일입니다';	 
-                          document.getElementById('emailError').style.color = 'green';		// 초록색으로 글자색 변경
-                      } else {
-                          // 사용 불가능한 email인 경우
-                          document.getElementById('emailError').textContent = '이미 사용중인 이메일입니다';
-                          document.getElementById('emailError').style.color = 'red';		// 빨간색으로 글자색 변경
-                      }
-                  }
-              };
-              xhr.send('email=' + encodeURIComponent(email));	// 실제로 서버에 보낼 데이터
-        }
-        });
-        
-        // AJAX를 이용해 닉네임 사용 가능 여부 검사(비동기적) 코드
-        // id가 unameCheck인 HTML요소를 클릭하는 경우 함수 실행
-      document.getElementById('unameCheck').addEventListener('click', function() {
-            var uname = document.getElementById('uname').value;	// id가 uname인 요소의 값을 uname변수에 저장
-          var unameError = document.getElementById('unameError');
-          
-          if(uname === ""){
-            // 입력이 안된 경우
-            unameError.textContent = '닉네임 필수 입력';
-            unameError.style.color = 'red';
-          }else if(unameError.textContent !== "공백없이 특수문자를 제외한 2~10글자를 입력해주세요"){	// 닉네임에 대한 에러 메시지가 없는 경우
-              var xhr = new XMLHttpRequest();		// XMLHttpRequest객체: 서버와 비동기 통신을 가능하게 해주는 객체
-              
-              xhr.open('POST', '/checkUname', true);	// 서버에 POST요청 보낼 준비 => HTTP 요청을 초기화하는 역할 / 마지막 인수: 비동기적으로 요청 처리할지 여부
-              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');	// HTTP 요청 헤더 설정/Content-Type 헤더를 두번째 인수 값으로 설정
-              xhr.onreadystatechange = function () {	// 요청의 상태가 변경될 때마다 실행되는 함수 설정
-                  
-                if (xhr.readyState === 4 && xhr.status === 200) {	// xhr.readyState === 4: 요청을 성공적으로 했음을 처리
-                      var result = JSON.parse(xhr.responseText);		// xhr.status === 200: 성공적으로 요청 처리
-                      if (result.valid) {
-                          // 사용 가능한 uname인 경우
-                          document.getElementById('unameError').textContent = '사용 가능한 닉네임입니다';	 
-                          document.getElementById('unameError').style.color = 'green';		// 초록색으로 글자색 변경
-                      } else {
-                          // 사용 불가능한 uname인 경우
-                          document.getElementById('unameError').textContent = '이미 사용중인 닉네임입니다';
-                          document.getElementById('unameError').style.color = 'red';		// 빨간색으로 글자색 변경
-                      }
-                  }
-              };
-              xhr.send('uname=' + encodeURIComponent(uname));	// 실제로 서버에 보낼 데이터
-        }
-        });
-        
-        // id가 signUpForm인 <form>의 submit 버튼 클릭한 경우, 유효성 여부에 따른 버튼 활성화 코드
-        document.getElementById('signUpForm').addEventListener('submit', function(event) {
-          var emailError = document.getElementById('emailError');		// 이메일 에러 메시지
-          var unameError = document.getElementById('unameError');		// 닉네임 에러 메시지
-          var passwordError = document.getElementById('passwordError');	// 비밀번호 에러 메시지
-          var passwordCheckError = document.getElementById('passwordCheckError');	// 비밀번호 확인 에러 메시지
-          
-          var email = document.getElementById('email');		// 이메일 
-          var uname = document.getElementById('uname');		// 닉네임 
-          var password = document.getElementById('password');	// 비밀번호 
-          var passwordCheck = document.getElementById('passwordCheck');	// 비밀번호 확인 
-          
-          // 이메일 입력이 없는 경우
-        if(email.value === ""){
-          emailError.textContent = '이메일 필수 입력';
-          emailError.style.color = 'red';	
-        }else if(emailError.textContent === ""){
-          emailError.textContent = '사용 가능한 이메일인지 확인해주세요';
-          emailError.style.color = 'red';	
-        }
-        // 닉네임 입력이 없는 경우
-        if(uname.value === ""){
-          unameError.textContent = '닉네임 필수 입력';
-          unameError.style.color = 'red';	
-        }else if(unameError.textContent === ""){
-          unameError.textContent = '사용 가능한 닉네임인지 확인해주세요';
-          unameError.style.color = 'red';	
-        }
-        // 비밀번호 입력이 없는 경우
-        if(password.value === ""){
-          passwordError.textContent = '비밀번호 필수 입력';
-          passwordError.style.color = 'red';	
-        }
-        // 비밀번호 확인 입력이 없는 경우
-        if(passwordCheck.value === ""){
-          passwordCheckError.textContent = '비밀번호 확인 필수 입력';
-          passwordCheckError.style.color = 'red';	
-        }
-          
-          if((emailError.textContent !== '사용 가능한 이메일입니다') || (unameError.textContent !== '사용 가능한 닉네임입니다') || 
-              (passwordError.textContent !== "") || (passwordCheckError.textContent !== '비밀번호가 일치합니다')){
-            // 하나라도 유효성 검사를 통과하지 못한 경우
-          event.preventDefault();  // 폼 제출 중지(이벤트 발생할 때마다 해당 이벤트에서만 실행)
-          }
-      
-      });
-  
-      </script>
-
 </body>
 </html>

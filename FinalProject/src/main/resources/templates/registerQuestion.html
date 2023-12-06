@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>질문 등록</title>
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	a{text-decoration: none; color: #fff; font-size: 15px}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
+	
+	#nav>a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
+</style>
+</head>
+<body>
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="#">게시글</a></li>
+			<li><a href="#">마이페이지</a></li>
+		</ul>
+	</nav>
+	<p th:text="'환영합니다.' + ${userName ?: ''} + '님'"></p>
+	<div>
+    	<button type="button" onclick="window.location.href='/logout'">로그아웃</button>
+    </div>
+    
+    <!-- 본문 내용 -->
+    <div>
+    	<form action="/insertQuestion" method="post">
+    		<table border="1">
+    			<tr>
+    				<td><label for="title"></label></td>
+    				<td><input type="text" name="title" id="title" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for="content"></label></td>
+    				<td><input type="text" name="content" id="content" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for=""></label></td>
+    				<td>
+    					<select name="language" id="language">
+    						<option value="c#" selected>C#</option>
+        					<option value="python">Python</option>
+        					<option value="java">Java</option>
+        					<option value="기타">기타</option>
+    					</select>
+    				</td>
+    			</tr>
+    		</table>
+    		<button type="submit">등록</button>
+    	</form>
+    </div>
+</body>
+</html>

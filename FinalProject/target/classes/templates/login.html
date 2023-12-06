@@ -472,7 +472,7 @@
 			
 				<div class="top-window">
 						<div class="title">
-							<a href="index.html" class="links"><h1>spring final pj</h1></a>
+							<a href="/" class="links"><h1>spring final pj</h1></a>
 						</div>
 
 						<div class="top-buttons">
@@ -608,7 +608,11 @@
 	        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');	
 	        
 	        xhr.onload = function() {
-	            if (xhr.status === 200) {
+	        	var response = JSON.parse(xhr.responseText);
+	            if (response.status === "success") {
+	            	// xhr.status === 200는 HTTP 요청 자체가 성공적으로 완료되었음을 의미
+	            	// response.status === "success"는 로그인이 성공적으로 완료되었음을 의미
+	            	
 	            	// security는 서버에서 리다이렉트 수행
 	            	// ajax를 이용한 비동기 방식으로 클라이언트 측에서 로그인 요청
 	            	// 		=> 서버에서 리다이렉트 수행해도 클라이언트 측에서 인식 X
@@ -617,8 +621,8 @@
 	            	// 비동기 요청인 경우, 브라우저가 자동으로 리다이렉트 처리 X => 대신, 리다이렉트 응답이 JS에게 전달되고 JS코드에서 처리 과정 필요
 	            	window.location.href='/home'
 	            }else{
-	            	var json = JSON.parse(xhr.responseText);
-	                document.getElementById('errorMsg').textContent = json.errorMsg;
+	            	// 에러 메시지 출력
+	                document.getElementById('errorMsg').textContent = response.errorMsg;
 	            }
 	        };
 			
