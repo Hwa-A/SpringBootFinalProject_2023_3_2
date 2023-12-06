@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import com.finalproject.security.CustomAuthenticationFailureHandler;
+import com.finalproject.security.CustomAuthenticationSuccessHandler;
 import com.finalproject.service.PrincipalDetailsService;
 
 @Configuration	// xml 설정을 대신하는 스프링 설정 클래스 => xml 파일 역할을 함
@@ -47,8 +48,8 @@ public class SecurityConfig {
 			.and()
 			.exceptionHandling().accessDeniedPage("/fail");
 		http.authorizeHttpRequests()	// 요청에 대한 보안 설정
-				.requestMatchers("/h2-console/**", "/", "/fail", "/login_proc", "/login", "/signUp", "/checkEmail", 
-						"/checkUname", "/error")
+				.requestMatchers("/h2-console/**", "/images/**", "/", "/fail", "/login_proc", "/login", "/signUp", "/checkEmail", 
+						"/checkUname", "/error", "/home")
 				.permitAll()	// 모든 접근 허용( Authentication, Authorization 필요X)
 				.anyRequest().authenticated();	// 나머지 모든 요청은 모두 인증(로그인)된 사용자(Authentication)만 접근하도록 설정
 				
@@ -61,7 +62,8 @@ public class SecurityConfig {
 				.usernameParameter("email")	// default: username
 				.passwordParameter("password")	// default: password
 				.loginPage("/login") 	// 로그인 페이지(사용자 정의) 설정
-				.defaultSuccessUrl("/home") 	// 로그인 성공 후 이동할 페이지 설정(= form action url)
+				.successHandler(new CustomAuthenticationSuccessHandler())  // 성공 핸들러 설정
+//				.defaultSuccessUrl("/home") 	// 로그인 성공 후 이동할 페이지 설정(= form action url)
 				.failureHandler(new CustomAuthenticationFailureHandler())	//  로그인 실패 시 이동할 URL
 				.loginProcessingUrl("/login_proc");	// 로그인 Form Action Url / default: /login
 			

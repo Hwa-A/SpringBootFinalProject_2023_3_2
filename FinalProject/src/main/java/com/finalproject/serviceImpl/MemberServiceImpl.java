@@ -10,7 +10,7 @@ import com.finalproject.persistence.MemberRepository;
 import com.finalproject.service.MemberService;
 
 @Service
-public class serviceUserImpl implements MemberService {
+public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepository memberRepo;
 	@Autowired
