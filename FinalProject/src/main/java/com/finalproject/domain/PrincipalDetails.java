@@ -86,6 +86,11 @@ public class PrincipalDetails implements UserDetails {
 	public String getEmail() {
 		return member.getEmail();
 	}
+	
+	// 회원 역할을 가져옴
+	public String getRole() {
+		return member.getRole();
+	}
 
 }
 

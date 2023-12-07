@@ -26,6 +26,21 @@ public class mypageController {
 	@Autowired
 	private CommentService commentService;
 	
+	// 마이페이지(프로필) 이동
+	@RequestMapping("/myProfileForm")
+	public String myProfileForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
+								Model model) {
+		// 회원 정보 가져와 지정
+		Member member = new Member();
+		member.setEmail(principalDetails.getEmail());	// 회원 이메일
+		member.setUname(principalDetails.getUname());	// 회원 이메일
+		member.setRole(principalDetails.getRole());	// 회원 이메일
+		
+		model.addAttribute("member", member);
+		
+		return "profile";
+	}
+	
 	// 마이페이지 이동 + 현재 로그인한 회원이 작성한 질문 리스트 조회
 	@RequestMapping("/myPageForm")
 	public String myPageForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -34,10 +49,12 @@ public class mypageController {
 							 Model model) {
 		// 현재 로그인한 회원 정보
 		String currnetEmail = principalDetails.getEmail();	 // 회원 이메일
+		String currnetName = principalDetails.getUname();	 // 회원 닉네임
 		
 		// 회원 객체 생성
 		Member member = new Member();
 		member.setEmail(currnetEmail);		// 이메일 지정
+		member.setUname(currnetName);		// 닉네임 지정
 		
 		// Question의 seq를 기준으로 내림차순(역순) 정렬 조건을 생성
 	    Sort sort = Sort.by(Sort.Direction.DESC, "seq");
@@ -49,6 +66,7 @@ public class mypageController {
 	 	   
 	 	// 모델에 페이징 처리된 리스트를 저장
 	 	model.addAttribute("paging", paging);
+	 	model.addAttribute("member", member);
 	    
 		return "mypage";
 	}

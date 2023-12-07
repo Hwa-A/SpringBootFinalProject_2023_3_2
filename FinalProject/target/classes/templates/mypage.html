@@ -54,10 +54,10 @@
 		<ul>
 			<li><a href="/register">질문하기</a></li>
 			<li><a href="/home">게시글</a></li>
-			<li><a href="/myPageForm">마이페이지</a></li>
+			<li><a href="/myProfileForm">마이페이지</a></li>
 		</ul>
 	</nav>
-	<p th:text="'환영합니다.' + ${userName ?: ''} + '님'"></p>
+	<p th:text="${member.uname ?: ''} + '님이 작성하신 질문'"></p>
 	<div>
     	<button type="button" onclick="window.location.href='/logout'">로그아웃</button>
     </div>
@@ -126,9 +126,6 @@
 		            </a>
 		        </li>
     		</ul>
-    	</div>
-    	<div>
-    		<button type="button" onclick="window.location.href='/deleteMyAccount'">회원탈퇴</button>
     	</div>
     </div>
     <script type="text/javascript">
