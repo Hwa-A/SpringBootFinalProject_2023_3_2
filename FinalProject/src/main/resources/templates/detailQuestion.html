@@ -54,7 +54,7 @@
 		<ul>
 			<li><a href="/register">질문하기</a></li>
 			<li><a href="/home">게시글</a></li>
-			<li><a href="#">마이페이지</a></li>
+			<li><a href="/myPageForm">마이페이지</a></li>
 		</ul>
 	</nav>    
     <!-- 본문 내용 -->
@@ -100,6 +100,7 @@
     		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateQuestion(seq=${question.seq})} + '\''" >수정하기</button>
     		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteQuestion(seq=${question.seq})} + '\''">삭제하기</button>
     	</div>
+    	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/home} + '\''">질문목록으로</button>
     </div>
     
     <!-- 댓글 리스트 -->

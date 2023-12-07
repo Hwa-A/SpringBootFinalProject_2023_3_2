@@ -36,14 +36,14 @@ public class QuestionController {
 	// 로그인 성공한 경우, 메인 페이지로 이동 + 질문 리스트 조회
 	@RequestMapping("/home")
 	public String loginSuccessForm(@RequestParam(value="page", defaultValue="0") int page, 
-								   @RequestParam(value="size", defaultValue="5") int size, 
+								   @RequestParam(value="size", defaultValue="5") int size,
 								   Question question, Model model) {
 				
 		// 언어 선택이 없는 경우
 		if(question.getLanguage() == null) {
 			question.setLanguage("total");		
 		}
-		
+				
 		/* 질문 리스트 조회 */
 		// seq를 기준으로 내림차순(역순) 정렬 조건을 생성
 	    Sort sort = Sort.by(Sort.Direction.DESC, "seq");
@@ -67,8 +67,8 @@ public class QuestionController {
 	
 	// 질문 등록
 	@RequestMapping("/insertQuestion")
-	public String insertQuestion(@AuthenticationPrincipal PrincipalDetails principalDetails, Question question
-								, Model model) {
+	public String insertQuestion(@AuthenticationPrincipal PrincipalDetails principalDetails,
+								 Question question, Model model) {
 		String currnetEmail = principalDetails.getEmail();		// 현재 로그인한 회원의 이메일 가져오기
 		
 		// 회원 객체 생성
@@ -87,7 +87,7 @@ public class QuestionController {
 									@RequestParam(value="page", defaultValue="0") int page, 
 									@RequestParam(value="size", defaultValue="2") int size, 
 									Question question, Model model,
-									@ModelAttribute("questionSeq") int questionSeq) {
+									@RequestParam(value="questionSeq", defaultValue="0") int questionSeq) {
 		/* 질문 상세 조회 */
 		// 현재 로그인한 회원 정보
 		String currnetEmail = principalDetails.getEmail();	 // 회원 이메일
@@ -120,7 +120,7 @@ public class QuestionController {
 	 	
 	 	// 모델에 페이징 처리된 리스트를 저장
 	 	model.addAttribute("paging", paging);
-		
+	 	
 		return "detailQuestion";
 	}
 	
@@ -149,7 +149,7 @@ public class QuestionController {
 	public String deleteQuestion(Question question) {
 
 		// Question 삭제
-		questionService.deleteQuestion(question);
+		questionService.deleteQuestion(question);;
 		
 		return "forward:/home";
 	}

@@ -2,7 +2,7 @@
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>질문 상세 조회</title>
+<title>마이페이지 질문 상세 조회</title>
 <style type="text/css">
 	*{padding:0; margin:0}
 	ul, ol {list-style:none}
@@ -97,10 +97,10 @@
     		</table>
     	</form>
     	<div th:if="${writerCheck == 'same'}" >
-    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateQuestion(seq=${question.seq})} + '\''" >수정하기</button>
-    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteQuestion(seq=${question.seq})} + '\''">삭제하기</button>
+    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateMyQuestion(seq=${question.seq})} + '\''" >수정하기</button>
+    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteMyQuestion(seq=${question.seq})} + '\''">삭제하기</button>
     	</div>
-    	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/home} + '\''">질문목록으로</button>
+    	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/myPageForm} + '\''">내 질문목록으로</button>
     </div>
     
     <!-- 댓글 리스트 -->
@@ -112,7 +112,7 @@
     				<!-- !!!!!! th:if 부분과 내부의 <button>만 있으면 th:if를 어느 태그에 붙여도 사용 가능!!!!!!!! -->
     				<td th:if="${currentUname == comment.comWriter}">
     					<button type="button" 
-    							th:onclick="'window.location.href=' + '\'' + @{/deleteComment(seq=${question.seq},comSeq=${comment.comSeq})} + '\''">
+    							th:onclick="'window.location.href=' + '\'' + @{/deleteMyComment(seq=${question.seq},comSeq=${comment.comSeq})} + '\''">
     							삭제</button>
     				</td>
     			</tr>
@@ -167,12 +167,11 @@
 	    </div>
 	</div>
 	<input type="hidden" id="questionSeq" th:value="${question.seq}">     
-	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/registerComment(seq=${question.seq})} + '\''">댓글 등록</button>
    	<script type="text/javascript">
  		// 댓글 페이지 이동
 		function moveToPage(page) {
     		var questionSeq = document.getElementById('questionSeq').value;	// 언어 값 가져오기
-    		window.location.href = '/getDetailQuestion?page=' + page + '&seq=' + questionSeq;	// 페이지 이동
+    		window.location.href = '/getDetailMyQuestion?page=' + page + '&seq=' + questionSeq;	// 페이지 이동
 		}
    	</script>
 </body>
