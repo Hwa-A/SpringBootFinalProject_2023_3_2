@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
+
+	#nav > a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
+
+	/* 페이지 번호 활성 및 비활성화 스타일 지정 active와 disable 클래스로 이미 태그에 지정함 */
+	.active {
+    /* 현재 페이지 = 활성 상태일 때의 스타일 */
+    background-color: #f00;
+    color: #fff;
+    }
+    
+    /* 마우스 이벤트와 마우스 커서 비활성화 반드시 필요!!*/
+    .disabled {
+    /* 비활성화 상태일 때의 스타일 */
+    color: #ccc;
+    pointer-events: none;
+    cursor: not-allowed;
+	}
+	
+	div > ul {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px; /* 각 아이템 사이의 간격 */
+	}
+</style>
+</head>
+<body>
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="/home">게시글</a></li>
+			<li><a href="/myProfileForm">마이페이지</a></li>
+		</ul>
+	</nav>
+	<p th:text="'환영합니다.' + ${userName ?: ''} + '님'"></p>
+	<div>
+    	<button type="button" onclick="window.location.href='/logout'">로그아웃</button>
+    </div>
+	<div>
+		<img src="/images/profile.jpg" alt="profile(default).jpg" width="200" height="200" >
+		<table border="1">
+			<tr>
+				<td>이메일</td>
+				<td th:text="${member.email}"></td>
+			</tr>
+			<tr>
+				<td>닉네임</td>
+				<td th:text="${member.uname}"></td>
+			</tr>
+			<tr>
+				<td>권한</td>
+				<td th:text="${member.role}"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><button type="button" onclick="window.location.href='/myPageForm'">내가 작성한 질문</button></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+    	<button type="button" onclick="window.location.href='/deleteMyAccount'">회원탈퇴</button>
+    </div>
+</body>
+</html>
