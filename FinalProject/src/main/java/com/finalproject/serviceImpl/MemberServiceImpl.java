@@ -35,4 +35,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		memberRepo.save(member);	// DB에 User 객체 저장
 	}
+
+	@Override	// 회원 탈퇴
+	public void deleteMyAccount(String email) {
+		memberRepo.deleteById(email);
+		
+	}
 }

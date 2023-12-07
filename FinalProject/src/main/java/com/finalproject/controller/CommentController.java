@@ -48,8 +48,7 @@ public class CommentController {
 	// 댓글 등록
 	@RequestMapping("/insertComment")
 	public String insertComment(@AuthenticationPrincipal PrincipalDetails principalDetails, 
-								Question question, Comment comment,
-								RedirectAttributes ra) {
+								Question question, Comment comment) {
 		
 		String email = principalDetails.getEmail();		// 현재 로그인한 회원 이메일
 		
@@ -58,13 +57,8 @@ public class CommentController {
 
 		// 댓글 등록
 		commentService.insertComment(comment, question, member);
-		// RedirectAttributes 인터페이스: 리다이렉트 시점에 데이터를 임시로 추가 및 관리에 사용
-		//							 Flash Attribute를 관리하는 메소드를 제공
-		// Flash Attribute: 리다이렉트가 실행되는 동안 데이터를 유지하기 위한 메커니즘
-		//					리다이렉트 후에 즉시 제거
-		ra.addFlashAttribute("questionSeq", question.getSeq());
-		
-		return "redirect:/getDetailQuestion";
+
+		return "redirect:/getDetailQuestion?questionSeq=" + question.getSeq();
 	}
 	
 	// 댓글 삭제
@@ -75,5 +69,15 @@ public class CommentController {
 		commentService.deleteComment(comment);
 		
 		return "forward:/getDetailQuestion";
+	}
+	
+	// 본인 댓글 삭제
+	@RequestMapping("/deleteMyComment")
+	public String deleteMyComment(Comment comment, Question question) {
+		
+		// Comment 삭제
+		commentService.deleteComment(comment);
+		
+		return "forward:/getDetailMyQuestion";
 	}
 }
