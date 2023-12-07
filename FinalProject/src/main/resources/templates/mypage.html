@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>마이페이지</title>
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
+
+	#nav > a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
+
+	/* 페이지 번호 활성 및 비활성화 스타일 지정 active와 disable 클래스로 이미 태그에 지정함 */
+	.active {
+    /* 현재 페이지 = 활성 상태일 때의 스타일 */
+    background-color: #f00;
+    color: #fff;
+    }
+    
+    /* 마우스 이벤트와 마우스 커서 비활성화 반드시 필요!!*/
+    .disabled {
+    /* 비활성화 상태일 때의 스타일 */
+    color: #ccc;
+    pointer-events: none;
+    cursor: not-allowed;
+	}
+	
+	div > ul {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px; /* 각 아이템 사이의 간격 */
+	}
+</style>
+</head>
+<body>
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="/home">게시글</a></li>
+			<li><a href="#">마이페이지</a></li>
+		</ul>
+	</nav>
+	
+	<!-- 본문 내용 -->
+	<div>
+    	<table border="1">
+    		<tr>
+    			<th>번호</th>
+    			<th>제목</th>
+    			<th>작성자</th>
+    			<th>작성일자</th>
+    			<th>언어</th>
+    		</tr>
+    		
+    		<!-- 질문 리스트 -->
+			<!-- th:attr:속성 설정 문법 / HTML 요소의 속성을 동적으로 설정  --> 
+			<tr th:each="question, loop : ${paging}" th:attr="data-href=@{/getDetailQuestion(seq=${question.seq})}">
+				<td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+				<td th:text="${question.title}"></td>
+				<td th:text="${question.writer}"></td>
+				<td th:text="${#dates.format(question.createDate,'yyyy/MM/dd HH:mm')}"></td>
+				<td th:text="${question.language}"></td>
+			</tr>
+    	</table>
+    	
+    	<!-- 질문 목차 이동 -->
+    	<!-- paging.isEmpty: 페이지 존재 여부 (게시물이 있으면 false, 없으면 true) -->
+    	<div th:if="${!paging.isEmpty()}">	
+    		<ul>
+    			<!-- 이전 버튼 -->
+    			<li th:classappend="${!paging.hasPrevious} ? 'disabled'">	<!-- th:classappend="조건식 ? 클래스값": 조건식이 참인 경우 클래스값을 class 속성에 추가 -->
+    				<a th:onclick="'moveToPage(' + ${paging.number-1} + ')'">
+    					<span>이전</span>
+    				</a>
+    			</li>	
+    			<!-- #numbers.sequence(시작, 끝): 시작 번호부터 끝 번호까지의 루프를 만들어 내는 타임리프의 유틸리티 -->
+    			<!-- 페이지 버튼 5개씩 -->
+				<!-- 총 페이지 수가 5개 미만인 경우 -->
+		        <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+		            th:if="${paging.totalPages < 5}"
+		            th:classappend="${page == paging.number} ? 'active'">
+		            <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+		        </li>
+		        <!-- 첫 2페이지의 경우 -->
+		        <li th:each="page: ${#numbers.sequence(0, 4)}"
+		            th:if="${paging.number < 2 && paging.totalPages >= 5}"
+		            th:classappend="${page == paging.number} ? 'active'">
+		            <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+		        </li>
+		        <!-- 마지막 2페이지의 경우 -->
+		        <li th:each="page: ${#numbers.sequence(paging.totalPages-5, paging.totalPages-1)}"
+		            th:if="${paging.number >= paging.totalPages-2 && paging.totalPages >= 5}"
+		            th:classappend="${page == paging.number} ? 'active'">
+		            <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+		        </li>
+		        <!-- 중간 페이지들에 대한 처리 -->
+		        <li th:each="page: ${#numbers.sequence(paging.number-2, paging.number+2)}"
+		            th:if="${paging.number >= 2 && paging.number < paging.totalPages-2 && paging.totalPages >= 5}"
+		            th:classappend="${page == paging.number} ? 'active'">
+		            <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+		        </li>
+		        <!-- 이전 버튼 -->
+		        <li th:classappend="${!paging.hasNext} ? 'disabled'">
+		            <a th:onclick="'moveToPage(' + ${paging.number+1} + ')'">
+		                <span>다음</span>
+		            </a>
+		        </li>
+    		</ul>
+    	</div>
+    </div>
+    <script type="text/javascript">
+		// 질문 페이지 이동
+		function moveToPage(page) {
+    		window.location.href = '/getMyQuestionList?page=' + page;		// 페이지 이동
+		}
+		
+		// 질문행 클릭 시, 상세 조회로 이동
+		document.addEventListener('DOMContentLoaded', function() {
+			// data-href 속성을 가진 모든 <tr> 태그를 선택
+		   	var clickableRows = document.querySelectorAll('tr[data-href]');
+		
+			// 클릭한 <tr> 태그의 data-href 속성 값을 가져와 현재 페이지의 URL 변경
+		  	clickableRows.forEach(function(row) {
+		    	row.addEventListener('click', function() {
+		      	window.location.href = this.dataset.href;
+		    	});
+		  	});
+		});
+    </script>
+</body>
+</html>

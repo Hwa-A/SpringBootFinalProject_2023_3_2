@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>질문 조회</title>
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	a{text-decoration: none; color: #fff; font-size: 15px}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
+	
+	#nav>a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
+</style>
+</head>
+<body>
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="/home">게시글</a></li>
+			<li><a href="#">마이페이지</a></li>
+		</ul>
+	</nav>    
+    <!-- 본문 내용 -->
+    <div>
+    	<span id="errorMsg"></span>
+    	<form id="updateQuestionForm" action="/updateQuestion" method="post">
+    		<table border="1">
+    			<tr>
+    				<td><label for="title">제목</label></td>
+    				<td><input type="text" name="title" id="title" th:value="${question.title}" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for="createDate">작성일자</label></td>
+    				<td name="createDate" id="createDate" th:text="${#dates.format(question.createDate,'yyyy/MM/dd HH:mm')}" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for="content">내용</label></td>
+    				<td><textarea name="content" id="content" th:text="${question.content}" ></textarea></td>
+    			</tr>
+    			<tr>
+    				<td><label for="language">언어</label></td>
+    				<td name="language" id="language" th:text="${question.language}" ></td>
+    					<!-- 
+	    					<select name="language" id="language" th:value="${question.language}" >
+	    						<option value="C" th:selected="${question.language == 'C'}">C</option>
+	        					<option value="Python" th:selected="${question.language == 'Python'}">Python</option>
+	        					<option value="Java" th:selected="${question.language == 'Java'}">Java</option>
+	        					<option value="기타" th:selected="${question.language == '기타'}">기타</option>
+	    					</select>
+    					 -->	
+    			</tr>
+    		</table>
+    			<input type="hidden" name="language" id="language" th:value="${question.language}">
+    			<input type="hidden" name="seq" id="seq" th:value="${question.seq}">
+    			<button type="submit">확인</button>
+    		</form>
+    </div>
+    <script type="text/javascript">
+    	// 하나라도 입력이 안된 경우 form 제출 비활성화 + 에러 메시지
+    	document.getElementById('updateQuestionForm').addEventListener('submit', function(event) {
+    		var title = document.getElementById('title');		// 제목
+    		var content = document.getElementById('content');		// 내용
+    		var language = document.getElementById('language');	// 언어
+    		var errorMsg = document.getElementById('errorMsg');	// 에러 메시지
+    		
+    		if((title.value === "") || (content.value === "") || (language.value === "")){
+    			// 하나라도 유효성 검사를 통과하지 못한 경우
+				event.preventDefault();  // 폼 제출 중지(이벤트 발생할 때마다 해당 이벤트에서만 실행)
+    			
+				// 에러 메시지 설정
+				errorMsg.textContent = '모든 항목 입력 필수';	
+    			errorMsg.style.color = 'red';			
+    		}
+    	});
+    </script>
+</body>
+</html>

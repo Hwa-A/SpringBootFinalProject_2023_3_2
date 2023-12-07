@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>질문 상세 조회</title>
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
+
+	#nav > a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
+
+	/* 페이지 번호 활성 및 비활성화 스타일 지정 active와 disable 클래스로 이미 태그에 지정함 */
+	.active {
+    /* 현재 페이지 = 활성 상태일 때의 스타일 */
+    background-color: #f00;
+    color: #fff;
+    }
+    
+    /* 마우스 이벤트와 마우스 커서 비활성화 반드시 필요!!*/
+    .disabled {
+    /* 비활성화 상태일 때의 스타일 */
+    color: #ccc;
+    pointer-events: none;
+    cursor: not-allowed;
+	}
+	
+	div > ul {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px; /* 각 아이템 사이의 간격 */
+	}
+</style>
+</head>
+<body>
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="/home">게시글</a></li>
+			<li><a href="#">마이페이지</a></li>
+		</ul>
+	</nav>    
+    <!-- 본문 내용 -->
+    <div>
+    	<span id="errorMsg"></span>
+    	<form>
+    		<table border="1">
+    			<tr>
+    				<td><label for="title">제목</label></td>
+    				<td name="title" id="title" th:text="${question.title}" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for="writer">작성자</label></td>
+    				<td name="writer" id="writer" th:text="${question.writer}" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for="createDate">작성일자</label></td>
+    				<td name="createDate" id="createDate" th:text="${#dates.format(question.createDate,'yyyy/MM/dd HH:mm')}" ></td>
+    			</tr>
+    			<tr>
+    				<td><label for="content">내용</label></td>
+    				<td name="content" id="content" th:text="${question.content}"></td>
+    				<!-- 
+    				<td><textarea name="content" id="content" th:text="${question.content}" disabled></textarea></td>
+    				 -->
+    			</tr>
+    			<tr>
+    				<td><label for="language">언어</label></td>
+    				<td name="language" id="language" th:text="${question.language}" ></td>
+    					<!-- 회원이 언어 선택 못하고 읽기만 하도록 disabled 설정 -->
+    					<!-- 
+    					<select name="language" id="language" th:value="${question.language}" disabled>
+    						<option value="C" th:selected="${question.language == 'C'}">C</option>
+        					<option value="Python" th:selected="${question.language == 'Python'}">Python</option>
+        					<option value="Java" th:selected="${question.language == 'Java'}">Java</option>
+        					<option value="기타" th:selected="${question.language == '기타'}">기타</option>
+    					</select>
+    					 -->
+    			</tr>
+    		</table>
+    	</form>
+    	<div th:if="${writerCheck == 'same'}" >
+    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateQuestion(seq=${question.seq})} + '\''" >수정하기</button>
+    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteQuestion(seq=${question.seq})} + '\''">삭제하기</button>
+    	</div>
+    </div>
+    
+    <!-- 댓글 리스트 -->
+   	<div>
+    	<div>
+    		<table border="1" th:each="comment, loop : ${paging}" >
+    			<tr>
+    				<td th:text="${comment.comWriter} + '님'"></td>
+    				<!-- !!!!!! th:if 부분과 내부의 <button>만 있으면 th:if를 어느 태그에 붙여도 사용 가능!!!!!!!! -->
+    				<td th:if="${currentUname == comment.comWriter}">
+    					<button type="button" 
+    							th:onclick="'window.location.href=' + '\'' + @{/deleteComment(seq=${question.seq},comSeq=${comment.comSeq})} + '\''">
+    							삭제</button>
+    				</td>
+    			</tr>
+    			<tr><td colspan="2" th:text="${#dates.format(comment.comCreateDate,'yyyy/MM/dd HH:mm')}"></td></tr>
+    			<tr><td colspan="2"><textarea th:text="${comment.comContent}" readonly></textarea></td></tr>
+    		</table>
+    	</div>
+    	
+    	<!-- 댓글 목차 이동 -->
+    	<!-- paging.isEmpty: 페이지 존재 여부 (게시물이 있으면 false, 없으면 true) -->
+    	 <div th:if="${!paging.isEmpty()}">
+	        <ul>
+				<!-- 이전 버튼 -->
+	            <li th:classappend="${!paging.hasPrevious} ? 'disabled'"> 
+	                <a th:onclick="'moveToPage(' + ${paging.number-1} + ')'">
+	                    <span>이전</span>
+	                </a>
+	            </li>
+				<!-- #numbers.sequence(시작, 끝): 시작 번호부터 끝 번호까지의 루프를 만들어 내는 타임리프의 유틸리티 -->
+    			<!-- 페이지 버튼 5개씩 -->
+				<!-- 총 페이지 수가 5개 미만인 경우 -->
+	            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+	                th:if="${paging.totalPages < 5}"
+	                th:classappend="${page == paging.number} ? 'active'">
+	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+	            </li>
+	  			<!-- 첫 2페이지의 경우 -->
+	            <li th:each="page: ${#numbers.sequence(0, 4)}"
+	                th:if="${paging.number < 2 && paging.totalPages >= 5}"
+	                th:classappend="${page == paging.number} ? 'active'">
+	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+	            </li>
+				<!-- 마지막 2페이지의 경우 -->
+	            <li th:each="page: ${#numbers.sequence(paging.totalPages-5, paging.totalPages-1)}"
+	                th:if="${paging.number >= paging.totalPages-2 && paging.totalPages >= 5}"
+	                th:classappend="${page == paging.number} ? 'active'">
+	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+	            </li>
+	             <!-- 중간 페이지들에 대한 처리 -->
+	            <li th:each="page: ${#numbers.sequence(paging.number-2, paging.number+2)}"
+	                th:if="${paging.number >= 2 && paging.number < paging.totalPages-2 && paging.totalPages >= 5}"
+	                th:classappend="${page == paging.number} ? 'active'">
+	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+	            </li>
+	        	<!-- 이전 버튼 -->
+	            <li th:classappend="${!paging.hasNext} ? 'disabled'">
+	                <a th:onclick="'moveToPage(' + ${paging.number+1} + ')'">
+	                    <span>다음</span>
+	                </a>
+	            </li>
+	        </ul>
+	    </div>
+	</div>
+	<input type="hidden" id="questionSeq" th:value="${question.seq}">     
+	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/registerComment(seq=${question.seq})} + '\''">댓글 등록</button>
+   	<script type="text/javascript">
+ 		// 댓글 페이지 이동
+		function moveToPage(page) {
+    		var questionSeq = document.getElementById('questionSeq').value;	// 언어 값 가져오기
+    		window.location.href = '/getDetailQuestion?page=' + page + '&seq=' + questionSeq;	// 페이지 이동
+		}
+   	</script>
+</body>
+</html>

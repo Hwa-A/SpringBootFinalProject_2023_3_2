@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.domain.Member;
@@ -23,21 +27,22 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	@Override	// 질문 등록
 	public void insertQuestion(Question question, Member member) {
-		log.error("등록시작");
-		question.setMember(member);		// 질문에 작성자 지정
-		question.setCreateDate(new Date());
-		questionRepo.save(question);	// 저장
-		log.error("등록끝");
-
+		question.setMember(member);		// 질문 작성자
+		question.setCreateDate(new Date());		// 질문 작성일자 
+		
+		questionRepo.save(question);	
 	}
 
 	@Override	// 질문 수정
 	public void updateQuestion(Question question) {
-		Question findQuestion = questionRepo.findById(question.getSeq()).get();
+		// seq를 기준으로 Question 객체 반환
+		Question findQuestion = questionRepo.findById(question.getSeq()).get(); 	
+		
+		findQuestion.setTitle(question.getTitle()); 		// 질문 제복 변경
 		findQuestion.setContent(question.getContent());		// 질문 내용 변경
 		findQuestion.setLanguage(question.getLanguage());		// 프로그래밍 언어 변경
 		
-		questionRepo.save(findQuestion);	// 저장
+		questionRepo.save(findQuestion);	
 	}
 
 	@Override	// 질문 삭제
@@ -48,30 +53,51 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override	// 질문 상세 조회
 	public ShowQuestion getQuestion(Question question) {
 		Question findQuestion = questionRepo.findById(question.getSeq()).get();
+		
 		ShowQuestion showQuestion = new ShowQuestion(findQuestion);
 		
 		return showQuestion;	
 	}
 
 	@Override	// 질문 리스트 조회
-	public List<ShowQuestion> getQuestionList(Question question, String languageCategory) {
-		List<Question> findQuestionList;
+	public Page<ShowQuestion> getQuestionPage(Question question, Pageable pageable) {	// Pageable: 페이징 처리에 필요한 정보를 담고 있는 인터페이스
+		 Page<Question> findQuestionPage;
 		
-		if(languageCategory.equals("total")) {
-			// 모든 질문 찾아오기
-			findQuestionList = (List<Question>)questionRepo.findAll();		
+		if(question.getLanguage().equals("total")) {
+			// Pageable 인터페이스: 페이징 처리에 필요한 정보를 제공하는 인터페이스
+			// pageable에 지정된 페이지 번호와 페이지 크기에 따라 페이징 처리된 모든 결과를 반환
+			
+			// 모든 질문 가져오기
+			findQuestionPage = questionRepo.findAll(pageable); 		
 			
 		}else {
 			// 선택된 프로그래밍 언어에 해당되는 질문 조회
-			findQuestionList = (List<Question>)questionRepo.findByLanguage(languageCategory);
+			findQuestionPage = questionRepo.findByLanguage(question.getLanguage(), pageable);
 		}
-
+		
+		// Question 객체를 ShowQuestion 객체로 변환
 		List<ShowQuestion> showQuestionList = new ArrayList<>();
-		for(Question q : findQuestionList) {
-			showQuestionList.add(new ShowQuestion(q));	// Question객체를 ShowQuestion객체 리스트로 변환
-		}
+	    for(Question q : findQuestionPage.getContent()) {
+	        showQuestionList.add(new ShowQuestion(q));   
+	    }
 
-		return showQuestionList;
+		return new PageImpl<>(showQuestionList, pageable, findQuestionPage.getTotalElements());
 	}
 
+	@Override	// 회원이 작성한 질문 가져오기
+	public Page<ShowQuestion> getMyQuestionPage(Member member, Pageable pageable) {
+		Page<Question> findQuestionPage;
+		
+		// 회원이 작성한 질문들 조회
+		findQuestionPage = questionRepo.findByMember_Email(member.getEmail(), pageable);
+		
+		// Question 객체를 ShowQuestion 객체로 변환
+		List<ShowQuestion> showQuestionList = new ArrayList<>();
+		for(Question q : findQuestionPage.getContent()) {
+			showQuestionList.add(new ShowQuestion(q));   
+		}
+		
+		return new PageImpl<>(showQuestionList, pageable, findQuestionPage.getTotalElements());
+	}
+	
 }
