@@ -2,7 +2,7 @@
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>메인 페이지</title>
+<title>마이페이지</title>
 <style type="text/css">
 	*{padding:0; margin:0}
 	ul, ol {list-style:none}
@@ -57,19 +57,9 @@
 			<li><a href="#">마이페이지</a></li>
 		</ul>
 	</nav>
-	<p th:text="'환영합니다.' + ${userName ?: ''} + '님'"></p>
+	
+	<!-- 본문 내용 -->
 	<div>
-    	<button type="button" onclick="window.location.href='/logout'">로그아웃</button>
-    </div>
-    <select name="language" id="language" th:value="${question.language} ?: 'total'" >
-    	<option value="total" th:selected="${question.language == 'total'}">전체</option>
-    	<option value="C" th:selected="${question.language == 'C'}">C</option>
-        <option value="Python" th:selected="${question.language == 'Python'}">Python</option>
-        <option value="Java" th:selected="${question.language == 'Java'}">Java</option>
-        <option value="기타" th:selected="${question.language == '기타'}">기타</option>
-    </select>
-    <!-- 본문 내용 -->
-    <div>
     	<table border="1">
     		<tr>
     			<th>번호</th>
@@ -136,19 +126,12 @@
     	</div>
     </div>
     <script type="text/javascript">
-    	
-    	// 언어 선택시, 선택된 언어에 해당하는 글이 나오도록 
-		document.getElementById('language').addEventListener('change', function() {
-	        window.location.href = '/home?page=0&language=' + this.value;
-	    });
-    	
-    	// 질문 페이지 이동
-    	function moveToPage(page) {
-        	var language = document.getElementById('language').value;	// 언어 값 가져오기
-        	window.location.href = '/home?page=' + page + '&language=' + language;		// 페이지 이동
-    	}
+		// 질문 페이지 이동
+		function moveToPage(page) {
+    		window.location.href = '/getMyQuestionList?page=' + page;		// 페이지 이동
+		}
 		
-    	// 질문 row 클릭 시, 상세 조회로 이동
+		// 질문행 클릭 시, 상세 조회로 이동
 		document.addEventListener('DOMContentLoaded', function() {
 			// data-href 속성을 가진 모든 <tr> 태그를 선택
 		   	var clickableRows = document.querySelectorAll('tr[data-href]');
@@ -160,6 +143,6 @@
 		    	});
 		  	});
 		});
-</script>
+    </script>
 </body>
 </html>

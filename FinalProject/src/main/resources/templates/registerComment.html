@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>댓글 작성</title>
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	a{text-decoration: none; color: #fff; font-size: 15px}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
+	
+	#nav>a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
+</style>
+</head>
+<body>
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="/home">게시글</a></li>
+			<li><a href="#">마이페이지</a></li>
+		</ul>
+	</nav>    
+    <!-- 본문 내용 -->
+    <p>댓글 작성</p>
+    <span id="errorMsg"></span>
+    <form id="registerCommentForm" action="/insertComment" method="post">
+    	<table border="1">
+    		<tr>
+    			<td>작성자</td>
+    			<td th:text="${member.uname}"></td>
+    		</tr>
+    		<tr>
+    			<td><label for="comContent">내용</label></td>
+    			<td><textarea name="comContent" id="comContent"></textarea></td>
+    		</tr>
+    	</table>
+    	<input type="hidden" name="seq" id="seq" th:value="${question.seq}">
+    	<button type="submit">댓글 등록</button>
+    </form>
+    <script type="text/javascript">
+    	// 내용 입력이 안된 경우 form 제출 비활성화 + 에러 메시지
+    	document.getElementById('registerCommentForm').addEventListener('submit', function(event) {
+    		var content = document.getElementById('comContent');	// 내용
+    		var errorMsg = document.getElementById('errorMsg');		// 에러 메시지
+    		
+    		if(content.value === ""){
+    			// 입력이 안된 경우
+				event.preventDefault();  // 폼 제출 중지(이벤트 발생할 때마다 해당 이벤트에서만 실행)
+
+				// 에러 메시지 설정
+				errorMsg.textContent = '내용 입력 필수';	
+    			errorMsg.style.color = 'red';			
+    		}
+    	});
+    </script>
+</body>
+</html>

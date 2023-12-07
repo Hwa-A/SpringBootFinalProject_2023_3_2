@@ -44,12 +44,12 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		// h2 console을 위한 설정
 		http.csrf().disable();	// CSRF 중지
-		http.headers().frameOptions().disable()	// X-Frame-Options in Spring Security 중지
-			.and()
-			.exceptionHandling().accessDeniedPage("/fail");
+		http.headers().frameOptions().disable();	// X-Frame-Options in Spring Security 중지
+		//	.and()
+		//	.exceptionHandling().accessDeniedPage("/fail");	// 접근 거부된(특정 권한이 없는) 사용자가 이동할 페이지 설정
 		http.authorizeHttpRequests()	// 요청에 대한 보안 설정
 				.requestMatchers("/h2-console/**", "/images/**", "/", "/fail", "/login_proc", "/login", "/signUp", "/checkEmail", 
-						"/checkUname", "/error", "/home")
+						"/checkUname", "/error")
 				.permitAll()	// 모든 접근 허용( Authentication, Authorization 필요X)
 				.anyRequest().authenticated();	// 나머지 모든 요청은 모두 인증(로그인)된 사용자(Authentication)만 접근하도록 설정
 				
