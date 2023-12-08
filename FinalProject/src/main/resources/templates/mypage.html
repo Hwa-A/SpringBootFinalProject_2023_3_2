@@ -47,7 +47,7 @@
 	}
 </style>
 </head>
-<body>
+<body th:attr="data-page-number=${paging.number}">
 	<!-- 네비게이션 바 -->
 	<nav id="nav">
 		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
@@ -142,7 +142,14 @@
 			// 클릭한 <tr> 태그의 data-href 속성 값을 가져와 현재 페이지의 URL 변경
 		  	clickableRows.forEach(function(row) {
 		    	row.addEventListener('click', function() {
-		      	window.location.href = this.dataset.href;
+		    		// 이전에 LocalStorage에 저장한 데이터(언어, 페이지 번호)삭제
+		    		localStorage.clear();
+		    		
+		    		// body 태그의 data-page-number 속성 값을 가져와 LocalStorage에 저장
+		            var questionPageNo = document.querySelector('body').dataset.pageNumber;
+		    		localStorage.setItem('questionPageNo', questionPageNo);
+		    		
+		      		window.location.href = this.dataset.href;
 		    	});
 		  	});
 		});

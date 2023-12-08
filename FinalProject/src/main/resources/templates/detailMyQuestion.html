@@ -100,7 +100,7 @@
     		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateMyQuestion(seq=${question.seq})} + '\''" >수정하기</button>
     		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteMyQuestion(seq=${question.seq})} + '\''">삭제하기</button>
     	</div>
-    	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/myPageForm} + '\''">내 질문목록으로</button>
+    	<button type="button" id="goBack">내 질문목록으로</button>
     </div>
     
     <!-- 댓글 리스트 -->
@@ -173,6 +173,14 @@
     		var questionSeq = document.getElementById('questionSeq').value;	// 언어 값 가져오기
     		window.location.href = '/getDetailMyQuestion?page=' + page + '&seq=' + questionSeq;	// 페이지 이동
 		}
+ 		
+		// 이전 질문목록으로 이동
+ 		document.getElementById('goBack').addEventListener('click', function() {
+ 			// Local Storage에서 데이터 가져오기
+ 			var questionPageNor = localStorage.getItem('questionPageNo');	// 이전 질문 목록의 페이지 번호
+ 			// 이동
+		    window.location.href = '/myPageForm?page=' + questionPageNor;
+		});
    	</script>
 </body>
 </html>
