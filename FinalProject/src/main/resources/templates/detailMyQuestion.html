@@ -2,28 +2,31 @@
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>마이페이지 질문 상세 조회</title>
-<style type="text/css">
-	*{padding:0; margin:0}
-	ul, ol {list-style:none}
-	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
 
-	#nav > a {
-	  display: block; /* a태그는 글자성격 = inline */
-	  float: left;
-	  font-size: 30px;
-	  font-weight: 900;
-	  line-height: 80px;
-	  padding: 0 30px;
-	}
-	#nav>ul {
-	  float: right;
-	}
-	#nav>ul li {
-	  float: left;
-	  padding: 0 30px;
-	  line-height: 80px;
-	}
+<title>로그인</title>
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap');
+
+
+    .choose-language
+    {
+        position: absolute;
+        top: 55px;
+        right: 21px;
+        filter:drop-shadow(0 0 6px var(--main-color));
+        background-color: white;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        color: black;
+        font-size: 10px;
+        border-radius: 3px;
+        z-index: 100;
+        cursor: pointer;
+    }
 
 	/* 페이지 번호 활성 및 비활성화 스타일 지정 active와 disable 클래스로 이미 태그에 지정함 */
 	.active {
@@ -45,128 +48,758 @@
     justify-content: center; /* 가운데 정렬 */
     gap: 10px; /* 각 아이템 사이의 간격 */
 	}
+
+.paging-ul {
+   padding:2px;
+    font-family:'Chakra Petch',monospace;
+	position:fixed;
+	top:351px;
+	left:217px;
+	font-size:10px;
+	display: flex;
+	justify-content: center; /* 가운데 정렬 */
+	gap: 10px; /* 각 아이템 사이의 간격 */
+	cursor:pointer;;
+  }
+.paging-ul a
+{
+  font-size: 10px;
+  color: white;
+}
+:root{
+ --main-color:#8DD4FF;
+ --other-color:rgb(232, 244, 251);
+ --main-color-op:#8DD4FF64;
+ --red-color-op:rgba(250, 193, 248, 0.894);
+ 
+}
+
+@keyframes rotation{
+  0%{
+    transform:rotateY(0deg);
+  }
+  100%{
+    transform:rotateY(360deg);
+  }
+}
+
+@keyframes move{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-6px);
+  }
+}
+
+@keyframes cursor-move{
+  10%,100%{
+    transform:translate(0px,0px);
+  }
+  25%,35%{
+    transform:translate(-250px,-100px);
+  }
+  50%,60%{
+    transform:translate(-680px,60px);
+  }
+  75%,85%{
+    transform:translate(-400px,320px);
+  }
+}
+
+html,body,.container{
+  margin:0;
+  padding:0;
+  height:100vh;
+   scrollbar-width: 0;
+color:white;
+ }
+
+
+body{
+  background:#000;
+}
+
+h1{
+  margin:0;
+  padding:2px 8px;
+  font-family:'Chakra Petch',monospace;
+  font-size:16px;
+  font-weight:bold;
+  color:var(--main-color);
+}
+
+p{
+  margin:0;
+  padding:0 24px;
+  font-family:'Chakra Petch',monospace;
+  font-family:16px;
+  color:var(--main-color);
+  width:315px;
+}
+
+span{
+  font-weight:bold;
+  transition: 0.2s ease-in-out;
+}
+
+a{
+  margin:0;
+  padding:0;
+  width:16px;
+  justify-self:center;
+  align-self:center;
+  text-decoration:none;
+  transform:translatey(2px);
+}
+
+svg{
+  color:var(--main-color);
+}
+ul, ol {list-style:none}
+	a{text-decoration: none; color: #fff; font-size: 15px}
+	
+.screen-container:before{
+  margin:0;
+  padding:0;
+  content:"";
+  display:grid;
+  position:absolute;
+  inset:0;
+  height:100%;
+  width:100%;
+  background-image:url(https://as1.ftcdn.net/v2/jpg/05/49/29/70/1000_F_549297047_fxiIUIxD1AM6Iaw3GjQQ9ZBRrHJQm21q.jpg);
+  background-size:20%;
+  opacity:4%;
+}
+
+.container{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  transform-style: preserve-3d;
+}
+
+.screen-container{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  height:480px;
+  width:800px;
+  background-image:url(https://i.gyazo.com/687bd077ff3de4fc6a6ba5e20da3e629.png);
+  box-shadow:0 0 128px var(--main-color-op);
+}
+
+/* y2kcodepen 창모양 */
+.main-window-container{
+  display:grid;
+  height:352px;
+  width:576px;
+  background:#0006;
+  border: 2px solid var(--main-color);
+  backdrop-filter:blur(8px);
+  transform:translate(0,-20px);
+}
+/*  y2kcodepen 제목 */
+.top-window{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  height:24px;
+  width:576px;
+  background:#0006;
+  border-bottom:2px solid var(--main-color);
+}
+
+.cat{
+  display:grid;
+  height:26px;
+  z-index:2;
+  width:27px;
+  transform:translate(26px,30px);
+}
+
+.sleep-cat{
+  display:grid;
+  z-index:2;
+  height:21px;
+  width:25px;
+  transform:translate(554px,381px);
+}
+
+.top-buttons{
+  display:grid;
+  height:16px;
+  width:56px;
+  transform:translate(223px,4px);
+}
+
+.links{
+  text-decoration:none;
+  color: var(--main-color);
+  font-weight:bold;
+  transition: 0.2s ease-in-out;
+  cursor:pointer;
+}
+
+.links:hover{
+  filter:drop-shadow(0px 0px 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+.error-message{
+display: block;
+    position: relative;
+    left: 370px;
+    top: -4px;
+    font-size: 7px;
+    color: rgba(237, 36, 36, 0.593);
+    font-family:'Chakra Petch',monospace;
+    filter:drop-shadow(0px 0px 4px var(--main-color));
+}
+
+
+
+.cursor{
+  display:grid;
+  z-index:20;
+  height:24px;
+  width:24px;
+  transform:translate(614px,-289px);
+}
+
+.cursor-svg{
+  transition: 0.2s ease-in-out;
+  animation:cursor-move 6s ease-in-out infinite 6s;
+}
+
+.cursor-svg:hover{
+  filter:drop-shadow(0 0 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+.left-window-container{
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-rows:repeat(2,26px);
+  height:128px;
+  width:160px;
+  justify-content:center;
+  align-items:center;
+  transform:translate(496px,-226px);
+  background:red;
+}
+
+.left-window-container:after{
+  content:"";
+  display:grid;
+  z-index:-1;
+  height:128px;
+  width:160px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 20%,#000 20% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(-16px,-38px);
+}
+
+.main-left-window{
+  display:grid;
+  height:128px;
+  width:160px;
+  background:#000;
+  border: 2px solid var(--main-color);
+  transform:translateY(24px);
+}
+
+.top-left-window{
+  display:grid;
+  z-index:2;
+  height:23px;
+  width:160px;
+  background:#0006;
+  border-bottom:2px solid var(--main-color);
+  transform:translate(2px,-3px);
+}
+
+
+
+
+
+
+.top-right-buttons{
+  display:grid;
+  height:16px;
+  width:56px;
+  transform:translate(-4px);
+}
+
+.main-right-window{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  height:56px;
+  width:112px;
+}
+
+.eyes{
+  display:grid;
+  z-index:20;
+  height:44px;
+  width:54px;
+  transform:translate(0px,-1px);
+}
+.my-q
+{
+  font-size: 9.5px;
+  color: #3a6e9b;
+  font-family:'Chakra Petch',monospace;
+  width: 60px;
+  cursor: pointer;
+  background-color: white;
+  border: none;  
+  padding: 2px;
+  position: fixed;
+  top: 30px;
+  left: 494px;
+  line-height: 14px;
+   filter:drop-shadow(0 0 4px var(--main-color));
+}
+
+
+.eye{
+  transition: 0.2s ease-in-out;
+}
+
+.eye:hover{
+  filter:drop-shadow(0px 0px 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+.windows-container{
+  display:grid;
+  align-items:center;
+  justify-content:end;
+  height:112px;
+  width:145px;
+  transform:translate(-54px,-383px);
+}
+
+.square{
+  display:grid;
+  z-index:-1;
+  height:80px;
+  width:112px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(-29px,-56px);
+}
+
+.square:after{
+  content:"";
+  display:grid;
+  z-index:-1;
+  height:80px;
+  width:112px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(12px,-16px);
+}
+
+
+.welcome-msg-p
+{
+  position: absolute;
+  top: -23px;
+  left:40px;
+  width: inherit;
+  font-size: 13px;
+  
+}
+
+.logout-btn
+{
+  position: absolute;
+  top: -24px;
+  right: 4px;
+  font-size: 10px;
+  color: #3a6e9b;
+  font-family:'Chakra Petch',monospace;
+  width: 50px;
+  cursor: pointer;
+  background-color: white;
+  border: none;  
+  padding: 2px;
+   filter:drop-shadow(0 0 4px var(--main-color));
+}
+.logout-btn:hover
+{
+  filter:drop-shadow(0 0 40px var(--red-color-op));
+
+}
+.btns
+{
+    color: #90B5D6;
+    width: 60px;
+    background-color: white;
+    border: none;   filter:drop-shadow(0 0 4px var(--main-color));
+}
+ .d-btn
+   {
+   
+      font-size: 9.5px;
+	  color: #3a6e9b;
+	  font-family:'Chakra Petch',monospace;
+	  width: 50px;
+	  cursor: pointer;
+	  background-color: white;
+	  border: none;  
+	  width:100%;
+	
+      filter:drop-shadow(0 0 4px var(--main-color));
+   }
+
+.q-ta
+{
+  border:none;
+  width: 98%;
+  height: 100%;
+  font-size: 10px;
+}
+.q-ta::-webkit-scrollbar {
+  display: none;
+}
+
+
+.list-ul
+{
+  position: absolute;
+  top: -100px;
+  left: 316px;
+  font-size: 10px;
+  float: right;
+
+
+}
+.list-ul a{
+  font-size: 10px;
+  color: #3a6e9b;
+  padding:2px;
+   color:white;
+  border: none;  
+   filter:drop-shadow(0 0 4px var(--main-color));
+}
+.list-ul li{
+  float: left;
+  line-height: 150px;
+	padding: 0 5px;
+}
+.list-ul li:hover
+{
+  filter:drop-shadow(0 0 2px var(--red-color-op));
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+/* Chrome, Safari, Opera에 대한 스타일 */
+body::-webkit-scrollbar {
+  width: px; /* 스크롤바의 너비 설정 */
+}
+.main-content-div::-webkit-scrollbar {
+     filter:drop-shadow(0px 0px 4px var(--main-color));
+   width:2px;
+   background-color: white;
+}
+.main-content-div::-webkit-scrollbar-thumb {
+     width:2px;
+   background-color: #8DD4FF;
+}
+
+
+.main-content-div
+{ 
+  overflow:auto;
+  position: absolute;
+  top: 27px;
+  width: 100%;
+  height: 90%;
+
+}
+.main-content-table
+{
+  width: 93%;
+  position: relative;
+  top: 24px;
+  left: 20px;
+  font-size: 10px;
+  border: 0.5px solid #8DD4FF;
+  color: #8DD4FF;
+
+}
+
+textarea
+{background-color: transparent;
+color:#90B5D6; 
+ padding-left: 4px;
+  pointer-events: none;
+
+  cursor: wait;
+  
+}
+
+.comment-div
+{
+ width:95%;
+ height:100px;
+ overflow:scroll;
+  position:fixed;
+  top: 245px;
+  left: 20px;
+}
+
+
+
+
+.scroll {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+.comment-div::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+.scroll {
+  overflow: hidden;
+}
+    
+.comment-table
+{
+
+  width: 98%;
+  top: 240px;
+  left: 20px;
+  font-size: 10px;
+  border: 0.5px solid #8DD4FF;
+  color: #8DD4FF;
+
+}
+.main-content-table tr
+{
+  font-size: 10.5px;
+  border: 0.5px solid #8DD4FF;
+  line-height: 30px;
+  font-size:10px;
+  margin-left:20px;
+
+}
+
+.main-content-table td
+{
+  font-size: 10px;
+  border: 0.5px solid #8DD4FF;
+  
+  text-align: center;
+}
+.q-btns button
+{
+  font-size: 9.5px;
+  color: #3a6e9b;
+  font-family:'Chakra Petch',monospace;
+  width: 50px;
+  cursor: pointer;
+  background-color: white;
+  border: none;  
+  padding: 2px;
+  position: fixed;
+  top: 30px;
+   filter:drop-shadow(0 0 4px var(--main-color));
+}
+
+    
 </style>
 </head>
 <body>
-	<!-- 네비게이션 바 -->
-	<nav id="nav">
-		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
-		<ul>
-			<li><a href="/register">질문하기</a></li>
-			<li><a href="/home">게시글</a></li>
-			<li><a href="/myProfileForm">마이페이지</a></li>
-		</ul>
-	</nav>    
-    <!-- 본문 내용 -->
-    <div>
-    	<span id="errorMsg"></span>
-    	<form>
-    		<table border="1">
-    			<tr>
-    				<td><label for="title">제목</label></td>
-    				<td name="title" id="title" th:text="${question.title}" ></td>
-    			</tr>
-    			<tr>
-    				<td><label for="writer">작성자</label></td>
-    				<td name="writer" id="writer" th:text="${question.writer}" ></td>
-    			</tr>
-    			<tr>
-    				<td><label for="createDate">작성일자</label></td>
-    				<td name="createDate" id="createDate" th:text="${#dates.format(question.createDate,'yyyy/MM/dd HH:mm')}" ></td>
-    			</tr>
-    			<tr>
-    				<td><label for="content">내용</label></td>
-    				<td name="content" id="content" th:text="${question.content}"></td>
-    				<!-- 
-    				<td><textarea name="content" id="content" th:text="${question.content}" disabled></textarea></td>
-    				 -->
-    			</tr>
-    			<tr>
-    				<td><label for="language">언어</label></td>
-    				<td name="language" id="language" th:text="${question.language}" ></td>
-    					<!-- 회원이 언어 선택 못하고 읽기만 하도록 disabled 설정 -->
-    					<!-- 
-    					<select name="language" id="language" th:value="${question.language}" disabled>
-    						<option value="C" th:selected="${question.language == 'C'}">C</option>
-        					<option value="Python" th:selected="${question.language == 'Python'}">Python</option>
-        					<option value="Java" th:selected="${question.language == 'Java'}">Java</option>
-        					<option value="기타" th:selected="${question.language == '기타'}">기타</option>
-    					</select>
-    					 -->
-    			</tr>
-    		</table>
-    	</form>
-    	<div th:if="${writerCheck == 'same'}" >
-    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateMyQuestion(seq=${question.seq})} + '\''" >수정하기</button>
-    		<button type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteMyQuestion(seq=${question.seq})} + '\''">삭제하기</button>
-    	</div>
-    	<button type="button" th:onclick="'window.location.href=' + '\'' + @{/myPageForm} + '\''">내 질문목록으로</button>
-    </div>
-    
-    <!-- 댓글 리스트 -->
-   	<div>
-    	<div>
-    		<table border="1" th:each="comment, loop : ${paging}" >
-    			<tr>
-    				<td th:text="${comment.comWriter} + '님'"></td>
-    				<!-- !!!!!! th:if 부분과 내부의 <button>만 있으면 th:if를 어느 태그에 붙여도 사용 가능!!!!!!!! -->
-    				<td th:if="${currentUname == comment.comWriter}">
-    					<button type="button" 
-    							th:onclick="'window.location.href=' + '\'' + @{/deleteMyComment(seq=${question.seq},comSeq=${comment.comSeq})} + '\''">
-    							삭제</button>
-    				</td>
-    			</tr>
-    			<tr><td colspan="2" th:text="${#dates.format(comment.comCreateDate,'yyyy/MM/dd HH:mm')}"></td></tr>
-    			<tr><td colspan="2"><textarea th:text="${comment.comContent}" readonly></textarea></td></tr>
-    		</table>
-    	</div>
-    	
-    	<!-- 댓글 목차 이동 -->
-    	<!-- paging.isEmpty: 페이지 존재 여부 (게시물이 있으면 false, 없으면 true) -->
-    	 <div th:if="${!paging.isEmpty()}">
-	        <ul>
-				<!-- 이전 버튼 -->
-	            <li th:classappend="${!paging.hasPrevious} ? 'disabled'"> 
-	                <a th:onclick="'moveToPage(' + ${paging.number-1} + ')'">
-	                    <span>이전</span>
-	                </a>
-	            </li>
-				<!-- #numbers.sequence(시작, 끝): 시작 번호부터 끝 번호까지의 루프를 만들어 내는 타임리프의 유틸리티 -->
-    			<!-- 페이지 버튼 5개씩 -->
-				<!-- 총 페이지 수가 5개 미만인 경우 -->
-	            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-	                th:if="${paging.totalPages < 5}"
-	                th:classappend="${page == paging.number} ? 'active'">
-	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
-	            </li>
-	  			<!-- 첫 2페이지의 경우 -->
-	            <li th:each="page: ${#numbers.sequence(0, 4)}"
-	                th:if="${paging.number < 2 && paging.totalPages >= 5}"
-	                th:classappend="${page == paging.number} ? 'active'">
-	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
-	            </li>
-				<!-- 마지막 2페이지의 경우 -->
-	            <li th:each="page: ${#numbers.sequence(paging.totalPages-5, paging.totalPages-1)}"
-	                th:if="${paging.number >= paging.totalPages-2 && paging.totalPages >= 5}"
-	                th:classappend="${page == paging.number} ? 'active'">
-	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
-	            </li>
-	             <!-- 중간 페이지들에 대한 처리 -->
-	            <li th:each="page: ${#numbers.sequence(paging.number-2, paging.number+2)}"
-	                th:if="${paging.number >= 2 && paging.number < paging.totalPages-2 && paging.totalPages >= 5}"
-	                th:classappend="${page == paging.number} ? 'active'">
-	                <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
-	            </li>
-	        	<!-- 이전 버튼 -->
-	            <li th:classappend="${!paging.hasNext} ? 'disabled'">
-	                <a th:onclick="'moveToPage(' + ${paging.number+1} + ')'">
-	                    <span>다음</span>
-	                </a>
-	            </li>
-	        </ul>
-	    </div>
-	</div>
-	<input type="hidden" id="questionSeq" th:value="${question.seq}">     
+    <div class="container">
+        <div class="screen-container">
+            <div class="cat">
+                    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 0H16V1H15V0Z" fill="currentColor"/>
+                    <path d="M14 2V1H15V2H14Z" fill="currentColor"/>
+                    <path d="M13 4V2H14V4H13Z" fill="currentColor"/>
+                    <path d="M10 4H11V5H12V4H13V6H10V4Z" fill="currentColor"/>
+                    <path d="M9 2H10V4H9V2Z" fill="currentColor"/>
+                    <path d="M8 1H9V2H8V1Z" fill="currentColor"/>
+                    <path d="M7 1V0H8V1H7Z" fill="currentColor"/>
+                    <path d="M6 3V1H7V3H6Z" fill="currentColor"/>
+                    <path d="M5 5V3H6V5H5Z" fill="currentColor"/>
+                    <path d="M5 12H4V5H5V12Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12H5V13H6V14H7V15H9V16H8V17H7V18H6V20H5V19H3V20H2V21H1V24H0V26H11V25H12V26H26V25H27V24H26V23H22V21H21V20H20V19H18V20H17V18H16V17H15V16H14V15H16V14H17V13H18V12H19V5H18V3H17V1H16V3H17V5H18V12H17V11H14V12H17V13H16V14H13V16H14V17H15V18H16V21H15V25H13V24H12V20H11V24H10V25H8V21H7V18H8V17H9V16H10V14H7V13H6V12ZM21 24V25H16V22H17V21H18V20H20V21H21V23H19V24H21ZM23 24V25H26V24H23ZM2 21V23H4V24H2V25H7V22H6V21H5V20H3V21H2Z" fill="currentColor"/>
+                    <path d="M6 12V11H9V12H6Z" fill="currentColor"/>
+                    <path d="M12 11H11V12H12V11Z" fill="currentColor"/>
+                    <path d="M8 7H9V10H8V7Z" fill="currentColor"/>
+                    <path d="M15 7H14V10H15V7Z" fill="currentColor"/>
+                    </svg>
+            </div>
+
+          <div class="main-window-container">
+            
+                <div class="top-window">
+                        <div class="title">
+                            <a href="/home" class="links"><h1>spring final pj</h1></a>
+                            
+                        </div>
+                        <div class="top-buttons">
+                            <svg width="56" height="16" viewBox="0 0 56 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M52 5.00195L51 4.00195L48 7.00195L45 4.00195L44 5.00195L47 8.00195L44 11.002L45 12.002L48 9.00195L51 12.002L52 11.002L49 8.00195L52 5.00195Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M40 0H56V16H40V0ZM41 1V15H55V1H41Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16V16H0V0ZM1 1V15H15V1H1Z" fill="currentColor"/>
+                            <path d="M3.5 11.5H12.5V12.5H3.5V11.5Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H36V16H20V0ZM21 1V15H35V1H21Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M31 5.00195H25V11.002H31V5.00195ZM24 4.00195V12.002H32V4.00195H24Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                     
+                </div>
+                    <!-- 메인윈도우 -->
+                <div class="main-window">
+ 				  <button class="logout-btn" type="button" onclick="window.location.href='/logout'">logout</button>
+                  <nav id="nav">
+                    
+                    <ul class="list-ul">
+                      <li><a href="/register">질문하기</a></li>
+                      <li><a href="/home">게시글</a></li>
+                      <li><a href="/myProfileForm">마이페이지</a></li>
+                    </ul>
+                  </nav>    
+                    <!-- 본문 내용 -->
+                    <div  class="main-content-div">
+                      <span id="errorMsg"></span>
+                      <form>
+                        <table border="1" class="main-content-table">
+                          <tr>
+                            <td><label for="title">제목</label></td>
+                            <td name="title" id="title" th:text="${question.title}" ></td>
+                          </tr>
+                          <tr>
+                            <td><label for="writer">작성자</label></td>
+                            <td name="writer" id="writer" th:text="${question.writer}" ></td>
+                          </tr>
+                          <tr>
+                            <td><label for="createDate">작성일자</label></td>
+                            <td name="createDate" id="createDate" th:text="${#dates.format(question.createDate,'yyyy/MM/dd HH:mm')}" ></td>
+                          </tr>
+                          <tr>
+                            <td><label for="content">내용</label></td>
+                            <td name="content" id="content" ><textarea style="text-align: center" disabled="disabled" rows="" cols="" th:text="${question.content}" class="q-ta"></textarea> </td>
+                            <!-- 
+                            <td><textarea name="content" id="content" th:text="${question.content}" disabled></textarea></td>
+                             -->
+                          </tr>
+                          <tr>
+                            <td><label for="language">언어</label></td>
+                            <td name="language" id="language" th:text="${question.language}" ></td>
+                              <!-- 회원이 언어 선택 못하고 읽기만 하도록 disabled 설정 -->
+                              <!-- 
+                              <select name="language" id="language" th:value="${question.language}" disabled>
+                                <option value="C" th:selected="${question.language == 'C'}">C</option>
+                                  <option value="Python" th:selected="${question.language == 'Python'}">Python</option>
+                                  <option value="Java" th:selected="${question.language == 'Java'}">Java</option>
+                                  <option value="기타" th:selected="${question.language == '기타'}">기타</option>
+                              </select>
+                               -->
+                          </tr>
+                        </table>
+                      </form>
+                      <div th:if="${writerCheck == 'same'}" class="q-btns">
+                        <button style="position:fixed; right: 150px" type="button" th:onclick="'window.location.href=' + '\'' + @{/getUpdateMyQuestion(seq=${question.seq})} + '\''" >수정하기</button>
+                        <button style="position:fixed; right:90px" type="button" th:onclick="'window.location.href=' + '\'' + @{/deleteMyQuestion(seq=${question.seq})} + '\''">삭제하기</button>
+                      </div>
+                      <button class="my-q"  type="button" th:onclick="'window.location.href=' + '\'' + @{/myPageForm} + '\''">내 질문</button>
+                    </div>
+                    
+                    <!-- 댓글 리스트 -->
+                     <div>
+                      <div class="comment-div">
+                        <table border="1" th:each="comment, loop : ${paging}"  class="comment-table">
+                          <tr>
+                            <td style="padding-left: 5px; width: 440px;" th:text="${comment.comWriter} + '님'"></td>
+                            <!-- !!!!!! th:if 부분과 내부의 <button>만 있으면 th:if를 어느 태그에 붙여도 사용 가능!!!!!!!! -->
+                            <td style="padding-left: 4px;" th:if="${currentUname == comment.comWriter}">
+                              <button type="button"   class="d-btn"
+                                  th:onclick="'window.location.href=' + '\'' + @{/deleteMyComment(seq=${question.seq},comSeq=${comment.comSeq})} + '\''">
+                                  삭제</button>
+                            </td>
+                          </tr>
+                          <tr><td colspan="2" th:text="${#dates.format(comment.comCreateDate,'yyyy/MM/dd HH:mm')}"></td></tr>
+                          <tr><td colspan="2"><textarea style="width: 99%" th:text="${comment.comContent}" readonly></textarea></td></tr>
+                        </table>
+                      </div>
+                      
+                      <!-- 댓글 목차 이동 -->
+                      <!-- paging.isEmpty: 페이지 존재 여부 (게시물이 있으면 false, 없으면 true) -->
+                       <div th:if="${!paging.isEmpty()}" >
+                          <ul  class="paging-ul">
+                        <!-- 이전 버튼 -->
+                              <li th:classappend="${!paging.hasPrevious} ? 'disabled'"> 
+                                  <a th:onclick="'moveToPage(' + ${paging.number-1} + ')'">
+                                      <span>이전</span>
+                                  </a>
+                              </li>
+                        <!-- #numbers.sequence(시작, 끝): 시작 번호부터 끝 번호까지의 루프를 만들어 내는 타임리프의 유틸리티 -->
+                          <!-- 페이지 버튼 5개씩 -->
+                        <!-- 총 페이지 수가 5개 미만인 경우 -->
+                              <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                                  th:if="${paging.totalPages < 5}"
+                                  th:classappend="${page == paging.number} ? 'active'">
+                                  <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+                              </li>
+                          <!-- 첫 2페이지의 경우 -->
+                              <li th:each="page: ${#numbers.sequence(0, 4)}"
+                                  th:if="${paging.number < 2 && paging.totalPages >= 5}"
+                                  th:classappend="${page == paging.number} ? 'active'">
+                                  <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+                              </li>
+                        <!-- 마지막 2페이지의 경우 -->
+                              <li th:each="page: ${#numbers.sequence(paging.totalPages-5, paging.totalPages-1)}"
+                                  th:if="${paging.number >= paging.totalPages-2 && paging.totalPages >= 5}"
+                                  th:classappend="${page == paging.number} ? 'active'">
+                                  <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+                              </li>
+                               <!-- 중간 페이지들에 대한 처리 -->
+                              <li th:each="page: ${#numbers.sequence(paging.number-2, paging.number+2)}"
+                                  th:if="${paging.number >= 2 && paging.number < paging.totalPages-2 && paging.totalPages >= 5}"
+                                  th:classappend="${page == paging.number} ? 'active'">
+                                  <a th:text="${page}" th:onclick="'moveToPage(' + ${page} + ')'"></a>
+                              </li>
+                            <!-- 이전 버튼 -->
+                              <li th:classappend="${!paging.hasNext} ? 'disabled'">
+                                  <a th:onclick="'moveToPage(' + ${paging.number+1} + ')'">
+                                      <span>다음</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <input type="hidden" id="questionSeq" th:value="${question.seq}">     
+
+
+
+                </div>
+                
+               </div> 
+          </div>
+
+
+				 
+              </div>
+          
+          </div>
+        </div>
+      </div>
    	<script type="text/javascript">
  		// 댓글 페이지 이동
 		function moveToPage(page) {
@@ -174,5 +807,6 @@
     		window.location.href = '/getDetailMyQuestion?page=' + page + '&seq=' + questionSeq;	// 페이지 이동
 		}
    	</script>
+
 </body>
 </html>
