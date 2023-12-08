@@ -31,7 +31,7 @@ public class CommentController {
 	// 댓글 등록 페이지로 이동
 	@RequestMapping("/registerComment")
 	public String registerCommentForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
-										Question question, Model model) {
+									  Question question, Model model) {
 		// 현재 로그인한 회원 정보 얻기
 		String email = principalDetails.getEmail();		// 회원 이메일
 		String uname = principalDetails.getUname();		// 회원 닉네임
@@ -41,6 +41,9 @@ public class CommentController {
 		
 		model.addAttribute("question", question);
 		model.addAttribute("member", member);
+		
+		// 현재 로그인한 회원 닉네임 저장
+	    model.addAttribute("userName", uname);
 
 		return "registerComment";
 	}

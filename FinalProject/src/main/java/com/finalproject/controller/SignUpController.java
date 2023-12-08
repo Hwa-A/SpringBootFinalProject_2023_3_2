@@ -1,4 +1,4 @@
-	package com.finalproject.controller;
+package com.finalproject.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +27,7 @@ public class SignUpController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 회원 가입 페이지로 이동
 	@GetMapping("/signUp")
 	public String signUpForm() {
 		return "signUp";

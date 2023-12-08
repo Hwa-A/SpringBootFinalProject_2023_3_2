@@ -27,15 +27,13 @@ public class LoginController {
 	@Autowired
 	private MemberService memberService;
 	
-
 	// 루트 주소 입력시 로그인 페이지로 이동
-//	@GetMapping("/")
-//	public String firstLoginForm() {		
-//		return "login";
-//	}
+	@GetMapping("/")
+	public String firstLoginForm() {		
+		return "login";
+	}
 	
 	// 로그인 페이지로 이동
-
 	@RequestMapping("/login")
 	public String loginForm() {		
 		return "login";

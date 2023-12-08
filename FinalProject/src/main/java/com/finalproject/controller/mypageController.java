@@ -26,7 +26,7 @@ public class mypageController {
 	@Autowired
 	private CommentService commentService;
 	
-	// 마이페이지(프로필) 이동
+	// 마이페이지(프로필) 페이지 이동
 	@RequestMapping("/myProfileForm")
 	public String myProfileForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
 								Model model) {
@@ -71,7 +71,7 @@ public class mypageController {
 		return "mypage";
 	}
 	
-	// 본인 질문 상세 조회 + 질문에 속하는 모든 댓글 조회
+	// 본인 질문 상세 조회 페이지 + 질문에 속하는 모든 댓글 조회
 	@RequestMapping("/getDetailMyQuestion")
 	public String getDetailMyQuestion(@AuthenticationPrincipal PrincipalDetails principalDetails,
 									  @RequestParam(value="page", defaultValue="0") int page, 
@@ -110,16 +110,22 @@ public class mypageController {
 	 	
 	 	// 모델에 페이징 처리된 리스트를 저장
 	 	model.addAttribute("paging", paging);
+	 	// 현재 로그인한 회원 닉네임 저장
+	    model.addAttribute("userName", currentUname);
 	 	
 		return "detailMyQuestion";
 	}
 	
-	// 본인 질문 상세 조회: 질문 수정을 위한
+	// 본인 질문 상세 조회 페이지: 질문 수정을 위한
 	@RequestMapping("/getUpdateMyQuestion")
-	public String getUpdateMyQuestion(Question question, Model model) {
+	public String getUpdateMyQuestion(@AuthenticationPrincipal PrincipalDetails principalDetails,
+									  Question question, Model model) {
 		
 		// seq를 기준으로 Question 조회
 		model.addAttribute("question", questionService.getQuestion(question));
+		
+		// 현재 로그인한 회원 닉네임 저장
+	    model.addAttribute("userName", principalDetails.getUname());
 		
 		return "updateMyQuestion";
 	}

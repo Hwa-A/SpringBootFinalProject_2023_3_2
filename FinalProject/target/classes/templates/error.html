@@ -1,382 +1,70 @@
-
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>코딩 Q&A</title>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap');
 
-:root{
- --main-color:#8DD4FF;
- --other-color:rgb(232, 244, 251);
- --main-color-op:#8DD4FF64;
- --red-color-op:#ec3d0de4;
- 
-}
+<style type="text/css">
+	*{padding:0; margin:0}
+	ul, ol {list-style:none}
+	nav{width: 100%; overflow: hidden; height: 80px; background-color: #1b2035; margin: 50px auto}
 
-@keyframes rotation{
-  0%{
-    transform:rotateY(0deg);
-  }
-  100%{
-    transform:rotateY(360deg);
-  }
-}
+	#nav > a {
+	  display: block; /* a태그는 글자성격 = inline */
+	  float: left;
+	  font-size: 30px;
+	  font-weight: 900;
+	  line-height: 80px;
+	  padding: 0 30px;
+	}
+	#nav>ul {
+	  float: right;
+	}
+	#nav>ul li {
+	  float: left;
+	  padding: 0 30px;
+	  line-height: 80px;
+	}
 
-@keyframes move{
-  0%,100%{
-    transform:translateY(0px);
-  }
-  50%{
-    transform:translateY(-6px);
-  }
-}
-
-
-html,body{
-  margin:0;
-  padding:0;
-  height:100vh;
-}
-
-
-.container
-{
-  
-  height: 20px;
-  position: absolute;
-  top:60px;
-}
-body{
-  background:#000;
-}
-
-h1{
-  margin:0;
-  padding:2px 8px;
-  font-family:'Chakra Petch',monospace;
-  font-size:16px;
-  font-weight:bold;
-  color:var(--main-color);
-}
-
-p{
-  margin:0;
-  padding:0 24px;
-  font-family:'Chakra Petch',monospace;
-  font-family:16px;
-  color:var(--main-color);
-  width:315px;
-}
-
-span{
-  font-weight:bold;
-  transition: 0.2s ease-in-out;
-}
-
-a{
-  margin:0;
-  padding:0;
-  width:16px;
-  justify-self:center;
-  align-self:center;
-  text-decoration:none;
-  transform:translatey(2px);
-}
-
-svg{
-  color:var(--main-color);
-}
-
-
-
-.screen-container:before{
-  margin:0;
-  padding:0;
-  content:"";
-  display:grid;
-  position:absolute;
-  inset:0;
-  height:100%;
-  width:100%;
-  background-image:url(https://as1.ftcdn.net/v2/jpg/05/49/29/70/1000_F_549297047_fxiIUIxD1AM6Iaw3GjQQ9ZBRrHJQm21q.jpg);
-  background-size:20%;
-  opacity:4%;
-}
-
-.container{
-  display:grid;
-  align-items:center;
-  justify-content:center;
-  transform-style: preserve-3d;
-}
-
-.screen-container{
-  display:grid;
-  align-items:center;
-  justify-content:center;
-  height:480px;
-  width:800px;
-  background-image:url(https://i.gyazo.com/687bd077ff3de4fc6a6ba5e20da3e629.png);
-  box-shadow:0 0 128px var(--main-color-op);
-}
-
-/* y2kcodepen 창모양 */
-.main-window-container{
-  display:grid;
-  height:352px;
-  width:576px;
-  background:#0006;
-  border: 2px solid var(--main-color);
-  backdrop-filter:blur(8px);
-  transform:translate(0,9px);
-}
-/*  y2kcodepen 제목 */
-.top-window{
-  display:grid;
-  grid-template-columns: repeat(2,1fr);
-  height:24px;
-  width:576px;
-  background:#0006;
-  border-bottom:2px solid var(--main-color);
-}
-
-.cat{
-  display:grid;
-  height:26px;
-  z-index:2;
-  width:27px;
-  transform:translate(174px,30px);
-}
-
-.sleep-cat{
-  display:grid;
-  z-index:2;
-  height:21px;
-  width:25px;
-  transform:translate(44px,401px);
-}
-
-.top-buttons{
-  display:grid;
-  height:16px;
-  width:56px;
-  transform:translate(223px,4px);
-}
-
-.links{
-  text-decoration:none;
-  color: var(--main-color);
-  font-weight:bold;
-  transition: 0.2s ease-in-out;
-  cursor:pointer;
-}
-
-.links:hover{
-  filter:drop-shadow(0px 0px 4px var(--main-color));
-  transition: 0.2s ease-in-out;
-}
-
-
-.error-message{
-display: block;
-    position: relative;
-    left: 370px;
-    top: -4px;
-    font-size: 7px;
-    color: rgba(237, 36, 36, 0.593);
-    font-family:'Chakra Petch',monospace;
-    filter:drop-shadow(0px 0px 4px var(--main-color));
-}
-
-
-
-.cursor{
-  display:grid;
-  z-index:20;
-  height:24px;
-  width:24px;
-  transform:translate(614px,-289px);
-}
-
-.cursor-svg{
-  transition: 0.2s ease-in-out;
-  animation:cursor-move 6s ease-in-out infinite 6s;
-}
-
-.cursor-svg:hover{
-  filter:drop-shadow(0 0 4px var(--main-color));
-  transition: 0.2s ease-in-out;
-}
-
-
-.left-window-container{
-  margin:0;
-  padding:0;
-  display:grid;
-  grid-template-rows:repeat(2,26px);
-  height:128px;
-  width:160px;
-  justify-content:center;
-  align-items:center;
-  transform:translate(496px,-226px);
-  background:red;
-}
-
-.left-window-container:after{
-  content:"";
-  display:grid;
-  z-index:-1;
-  height:128px;
-  width:160px;
-  background:linear-gradient(#000 0% 18%,var(--main-color)19% 20%,#000 20% 100%);
-  border: 2px solid var(--main-color);
-  transform:translate(-16px,-38px);
-}
-
-.main-left-window{
-  display:grid;
-  height:128px;
-  width:160px;
-  background:#000;
-  border: 2px solid var(--main-color);
-  transform:translateY(24px);
-}
-
-.top-left-window{
-  display:grid;
-  z-index:2;
-  height:23px;
-  width:160px;
-  background:#0006;
-  border-bottom:2px solid var(--main-color);
-  transform:translate(2px,-3px);
-}
-
-
-
-
-
-
-.top-right-buttons{
-  display:grid;
-  height:16px;
-  width:56px;
-  transform:translate(-4px);
-}
-
-.main-right-window{
-  display:grid;
-  align-items:center;
-  justify-content:center;
-  height:56px;
-  width:112px;
-}
-
-.eyes{
-  display:grid;
-  z-index:20;
-  height:44px;
-  width:54px;
-  transform:translate(0px,-1px);
-}
-
-.eye{
-  transition: 0.2s ease-in-out;
-}
-
-.eye:hover{
-  filter:drop-shadow(0px 0px 16px var(--main-color));
-  transition: 0.2s ease-in-out;
-}
-
-.windows-container{
-  display:grid;
-  align-items:center;
-  justify-content:end;
-  height:112px;
-  width:145px;
-  transform:translate(-54px,-383px);
-}
-
-.square{
-  display:grid;
-  z-index:-1;
-  height:80px;
-  width:112px;
-  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
-  border: 2px solid var(--main-color);
-  transform:translate(-29px,-56px);
-}
-
-.square:after{
-  content:"";
-  display:grid;
-  z-index:-1;
-  height:80px;
-  width:112px;
-  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
-  border: 2px solid var(--main-color);
-  transform:translate(12px,-16px);
-}
-
-
-.welcome-msg-p
-{
-  position: absolute;
-  top: 30px;
-  width: inherit;
-}
-
-.logout-btn
-{
-  position: absolute;
-  top: 34px;
-  right: 7px;
-  font-size: 10px;
-  color: #90B5D6;
-  width: 50px;
-  cursor: pointer;
-  background-color: white;
-  border: none;  
-   filter:drop-shadow(0 0 4px var(--main-color));
-}
-.logout-btn:hover
-{
-  filter:drop-shadow(0 0 40px var(--red-color-op));
-
-}
-.btns
-{
-    color: #90B5D6;
-    width: 60px;
-    background-color: white;
-    border: none;   filter:drop-shadow(0 0 4px var(--main-color));
-}
-.error-sorry-title
-{
-  position:absolute;
-  top: 1px;
-}
-
+	/* 페이지 번호 활성 및 비활성화 스타일 지정 active와 disable 클래스로 이미 태그에 지정함 */
+	.active {
+    /* 현재 페이지 = 활성 상태일 때의 스타일 */
+    background-color: #f00;
+    color: #fff;
+    }
+    
+    /* 마우스 이벤트와 마우스 커서 비활성화 반드시 필요!!*/
+    .disabled {
+    /* 비활성화 상태일 때의 스타일 */
+    color: #ccc;
+    pointer-events: none;
+    cursor: not-allowed;
+	}
+	
+	div > ul {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px; /* 각 아이템 사이의 간격 */
+	}
 </style>
 </head>
 <body>
-
-
-
-    <div class="container">
-		     <h1 class="error-sorry-title" style="padding-left: 20px"> !!!  에러 발생  !!!</h1>
-		     <hr>
-		     <br>
-		     <br>
-		     <p class="error-sorry">이런 일을 겪게 해드려서 죄송합니다.<br> 빠른 시일 내에 처리하겠습니다</p>
-     </div>
-
-          
-     
-
-
+	<!-- 네비게이션 바 -->
+	<nav id="nav">
+		<img src="/images/logo.gif" alt="Coding Q&A" width="200" height="100" >
+		<ul>
+			<li><a href="/register">질문하기</a></li>
+			<li><a href="/home">게시글</a></li>
+			<li><a href="/myProfileForm">마이페이지</a></li>
+		</ul>
+	</nav>    
+	<p th:text="'환영합니다.' + ${userName ?: ''} + '님'"></p>
+	<div>
+    	<button type="button" onclick="window.location.href='/logout'">로그아웃</button>
+    </div>
+    <!-- 본문 내용 -->
+	<h1>에러 발생</h1>
+	<hr>
+	<p>이런 일을 겪게 해드려서 죄송합니다. 빠른 시일 내에 처리하겠습니다</p>
 </body>
 </html>
