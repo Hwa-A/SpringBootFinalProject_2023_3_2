@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>코딩 Q&A</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap');
+
+:root{
+ --main-color:#8DD4FF;
+ --main-color-op:#8DD4FF64;
+}
+
+@keyframes rotation{
+  0%{
+    transform:rotateY(0deg);
+  }
+  100%{
+    transform:rotateY(360deg);
+  }
+}
+
+@keyframes move{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-6px);
+  }
+}
+
+@keyframes cursor-move{
+  10%,100%{
+    transform:translate(0px,0px);
+  }
+  25%,35%{
+    transform:translate(-250px,-100px);
+  }
+  50%,60%{
+    transform:translate(-680px,60px);
+  }
+  75%,85%{
+    transform:translate(-400px,320px);
+  }
+}
+
+html,body,.container{
+  margin:0;
+  padding:0;
+  height:100vh;
+}
+
+body{
+  background:#000;
+}
+
+h1{
+  margin:0;
+  padding:2px 8px;
+  font-family:'Chakra Petch',monospace;
+  font-size:16px;
+  font-weight:bold;
+  color:var(--main-color);
+}
+
+p{
+  margin:0;
+  padding:0 24px;
+  font-family:'Chakra Petch',monospace;
+  font-family:16px;
+  color:var(--main-color);
+  width:315px;
+}
+
+span{
+  font-weight:bold;
+  transition: 0.2s ease-in-out;
+}
+
+a{
+  margin:0;
+  padding:0;
+  width:16px;
+  justify-self:center;
+  align-self:center;
+  text-decoration:none;
+  transform:translatey(2px);
+}
+
+svg{
+  color:var(--main-color);
+}
+
+
+
+.screen-container:before{
+  margin:0;
+  padding:0;
+  content:"";
+  display:grid;
+  position:absolute;
+  inset:0;
+  height:100%;
+  width:100%;
+  background-image:url(https://as1.ftcdn.net/v2/jpg/05/49/29/70/1000_F_549297047_fxiIUIxD1AM6Iaw3GjQQ9ZBRrHJQm21q.jpg);
+  background-size:20%;
+  opacity:4%;
+}
+
+.container{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  transform-style: preserve-3d;
+}
+
+.screen-container{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  height:480px;
+  width:800px;
+  background-image:url(https://i.gyazo.com/687bd077ff3de4fc6a6ba5e20da3e629.png);
+  box-shadow:0 0 128px var(--main-color-op);
+}
+
+/* y2kcodepen 창모양 */
+.main-window-container{
+  display:grid;
+  height:352px;
+  width:576px;
+  background:#0006;
+  border: 2px solid var(--main-color);
+  backdrop-filter:blur(8px);
+  transform:translate(0,9px);
+}
+/*  y2kcodepen 제목 */
+.top-window{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  height:24px;
+  width:576px;
+  background:#0006;
+  border-bottom:2px solid var(--main-color);
+}
+
+.cat{
+  display:grid;
+  height:26px;
+  z-index:2;
+  width:27px;
+  transform:translate(174px,30px);
+}
+
+.sleep-cat{
+  display:grid;
+  z-index:2;
+  height:21px;
+  width:25px;
+  transform:translate(44px,221px);
+}
+
+.top-buttons{
+  display:grid;
+  height:16px;
+  width:56px;
+  transform:translate(229px,4px);
+}
+
+.links{
+  text-decoration:none;
+  color: var(--main-color);
+  font-weight:bold;
+  transition: 0.2s ease-in-out;
+  cursor:pointer;
+}
+
+.links:hover{
+  filter:drop-shadow(0px 0px 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+.first-p{
+  transform:translate(40px,27px);
+}
+
+.second-p{
+  width:355px;
+  transform:translate(84px,-45px);
+}
+
+.logo{
+  margin:0;
+  padding:0;
+  width:74px;
+  height:96px;
+  cursor: pointer;
+  transform:translate(407px,-58px); 
+}
+
+.rotate{
+  transition: 0.2s ease-in-out;
+}
+
+.rotate:hover{
+  scale:1.1;
+  filter:drop-shadow(0 0 8px var(--main-color));
+  animation: rotation 4s linear infinite reverse;
+  transition: 0.2s ease-in-out;
+}
+
+.cursor{
+  display:grid;
+  z-index:20;
+  height:24px;
+  width:24px;
+  transform:translate(614px,-289px);
+}
+
+.cursor-svg{
+  transition: 0.2s ease-in-out;
+  animation:cursor-move 6s ease-in-out infinite 6s;
+}
+
+.cursor-svg:hover{
+  filter:drop-shadow(0 0 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+.social-container{
+  display:grid;
+  grid-template-columns:repeat(4,48px);
+  justify-content:center;
+  transform:translate(20px,-2px);
+}
+
+.social h6{
+    color:#90B5D6;
+}
+
+.social h6:hover{
+    transform:scale(1.2) rotate(-2deg);
+    filter:drop-shadow(0px 0px 4px var(--main-color));
+    transition: 0.2s ease-in-out;
+    
+    
+}
+
+.icon{
+  transition: 0.2s ease-in-out;
+}
+
+.icon:hover{
+  transform:scale(2) rotate(-5deg);
+  filter:drop-shadow(0px 0px 4px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+
+.left-window-container{
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-rows:repeat(2,26px);
+  height:128px;
+  width:160px;
+  justify-content:center;
+  align-items:center;
+  transform:translate(496px,-226px);
+  background:red;
+}
+
+.left-window-container:after{
+  content:"";
+  display:grid;
+  z-index:-1;
+  height:128px;
+  width:160px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 20%,#000 20% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(-16px,-38px);
+}
+
+.main-left-window{
+  display:grid;
+  height:128px;
+  width:160px;
+  background:#000;
+  border: 2px solid var(--main-color);
+  transform:translateY(24px);
+}
+
+.top-left-window{
+  display:grid;
+  z-index:2;
+  height:23px;
+  width:160px;
+  background:#0006;
+  border-bottom:2px solid var(--main-color);
+  transform:translate(2px,-3px);
+}
+
+.world{
+  display:grid;
+  height:83px;
+  width:128px;
+  justify-self:center;
+  transform:translate(4px,30px);
+}
+
+.world-svg{
+  transition: 0.2s ease-in-out;
+}
+
+.world-svg:hover{
+  filter:drop-shadow(0 0 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+.top-left-buttons{
+  display: grid;
+  height:16px;
+  width:56px;
+  transform:translate(101px,4px);
+}
+
+.right-window-container{
+  margin:0;
+  padding:0;
+  display:grid;
+  justify-content:center;
+  align-items:center;
+  height:80px;
+  width:112px;
+  background:#000;
+  border: 2px solid var(--main-color);
+}
+
+.top-right-window{
+  display:grid;
+  align-items:center;
+  justify-content:end;
+  height:24px;
+  width:112px;
+  border-bottom:2px solid var(--main-color);
+  transform:translate(0px,0px);
+}
+
+.top-right-buttons{
+  display:grid;
+  height:16px;
+  width:56px;
+  transform:translate(-4px);
+}
+
+.main-right-window{
+  display:grid;
+  align-items:center;
+  justify-content:center;
+  height:56px;
+  width:112px;
+}
+
+.eyes{
+  display:grid;
+  z-index:20;
+  height:44px;
+  width:54px;
+  transform:translate(0px,-1px);
+}
+
+.eye{
+  transition: 0.2s ease-in-out;
+}
+
+.eye:hover{
+  filter:drop-shadow(0px 0px 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+.windows-container{
+  display:grid;
+  align-items:center;
+  justify-content:end;
+  height:112px;
+  width:145px;
+  transform:translate(-54px,-383px);
+}
+
+.square{
+  display:grid;
+  z-index:-1;
+  height:80px;
+  width:112px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(-29px,-56px);
+}
+
+.square:after{
+  content:"";
+  display:grid;
+  z-index:-1;
+  height:80px;
+  width:112px;
+  background:linear-gradient(#000 0% 18%,var(--main-color)19% 21%,#000 21% 100%);
+  border: 2px solid var(--main-color);
+  transform:translate(12px,-16px);
+}
+
+.counter-km{
+  display:grid;
+  height:32px;
+  width:39px;
+  transform:translate(515px,-36px);
+}
+
+.km{
+ transition: 0.2s ease-in-out; 
+}
+
+.km:hover{
+  transform:scale(1.2);
+  filter:drop-shadow(0px 0px 16px var(--main-color));
+  transition: 0.2s ease-in-out;
+}
+
+    
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="screen-container">
+            <div class="cat">
+                    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 0H16V1H15V0Z" fill="currentColor"/>
+                    <path d="M14 2V1H15V2H14Z" fill="currentColor"/>
+                    <path d="M13 4V2H14V4H13Z" fill="currentColor"/>
+                    <path d="M10 4H11V5H12V4H13V6H10V4Z" fill="currentColor"/>
+                    <path d="M9 2H10V4H9V2Z" fill="currentColor"/>
+                    <path d="M8 1H9V2H8V1Z" fill="currentColor"/>
+                    <path d="M7 1V0H8V1H7Z" fill="currentColor"/>
+                    <path d="M6 3V1H7V3H6Z" fill="currentColor"/>
+                    <path d="M5 5V3H6V5H5Z" fill="currentColor"/>
+                    <path d="M5 12H4V5H5V12Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12H5V13H6V14H7V15H9V16H8V17H7V18H6V20H5V19H3V20H2V21H1V24H0V26H11V25H12V26H26V25H27V24H26V23H22V21H21V20H20V19H18V20H17V18H16V17H15V16H14V15H16V14H17V13H18V12H19V5H18V3H17V1H16V3H17V5H18V12H17V11H14V12H17V13H16V14H13V16H14V17H15V18H16V21H15V25H13V24H12V20H11V24H10V25H8V21H7V18H8V17H9V16H10V14H7V13H6V12ZM21 24V25H16V22H17V21H18V20H20V21H21V23H19V24H21ZM23 24V25H26V24H23ZM2 21V23H4V24H2V25H7V22H6V21H5V20H3V21H2Z" fill="currentColor"/>
+                    <path d="M6 12V11H9V12H6Z" fill="currentColor"/>
+                    <path d="M12 11H11V12H12V11Z" fill="currentColor"/>
+                    <path d="M8 7H9V10H8V7Z" fill="currentColor"/>
+                    <path d="M15 7H14V10H15V7Z" fill="currentColor"/>
+                    </svg>
+            </div>
+
+            <div class="sleep-cat">
+                <svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0H2V1H6V2H4V4H2V5H8V4H5V3H6V2H7V1H8V0Z" fill="currentColor"/>
+                <path d="M18 3H19V4H18V3Z" fill="currentColor"/>
+                <path d="M17 5H18V4H17V5Z" fill="currentColor"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 9V10H15V8H16V6H17V5H14V4H15V3H16V2H12V3H14V4H13V5H12V6H11V5H10V6H9V7H8V8H5V9H3V10H2V12H1V13H0V18H1V19H2V20H7V21H15V20H17V21H24V20H25V15H24V12H23V9H22V8H21V7H20V4H19V9H20V10H21V16H20V17H18V18H17V17H16V18H9V17H8V14H7V10H8V8H9V7H10V6H11V8H12V9H13ZM13 9V8H14V9H13ZM7 10H6V14H7V17H8V18H9V19H14V20H8V19H2V18H1V13H2V12H3V10H5V9H7V10ZM20 18V17H21V18H20ZM22 16V17H21V16H22ZM23 16H22V13H23V16ZM23 16H24V19H23V20H21V19H22V18H23V16ZM20 18H18V20H20V18ZM21 9H22V10H21V9ZM21 9H20V8H21V9ZM12 6V7H15V6H12Z" fill="currentColor"/>
+                <path d="M18 15H17V16H18V15Z" fill="currentColor"/>
+                <path d="M19 14H18V15H19V14Z" fill="currentColor"/>
+                <path d="M19 14H20V13H19V14Z" fill="currentColor"/>
+                <path d="M14 16H15V17H14V16Z" fill="currentColor"/>
+                <path d="M12 15H14V16H12V15Z" fill="currentColor"/>
+                <path d="M12 15H9V14H12V15Z" fill="currentColor"/>
+                </svg>
+             </div>
+
+
+          <div class="main-window-container">
+            
+                <div class="top-window">
+                        <div class="title">
+                            <a href="/" class="links"><h1>spring final pj</h1></a>
+                        </div>
+
+                        <div class="top-buttons">
+                            <svg width="56" height="16" viewBox="0 0 56 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M52 5.00195L51 4.00195L48 7.00195L45 4.00195L44 5.00195L47 8.00195L44 11.002L45 12.002L48 9.00195L51 12.002L52 11.002L49 8.00195L52 5.00195Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M40 0H56V16H40V0ZM41 1V15H55V1H41Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16V16H0V0ZM1 1V15H15V1H1Z" fill="currentColor"/>
+                            <path d="M3.5 11.5H12.5V12.5H3.5V11.5Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H36V16H20V0ZM21 1V15H35V1H21Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M31 5.00195H25V11.002H31V5.00195ZM24 4.00195V12.002H32V4.00195H24Z" fill="currentColor"/>
+                            </svg>                            
+                        </div>
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100">
+  								<!-- 집의 지붕 -->		
+							
+							</svg>
+                </div>
+
+                <!-- 메인윈도우 -->
+             <div class="main-window">
+                        <p class="first-p">202107006 <span>홍서빈</span> 20210700? <span>조성은</span> <a href="https://github.com/Hwa-A/SpringBootFinalProject_2023_3_2" class="links" style="color: rgb(246, 220, 235);">github address</a>
+                        you can see our project in this GIT address</p>
+                                <a href="signup.html">
+                                      <div class="logo">
+                                        <svg class="rotate" width="174" height="96" viewBox="0 0 174 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g transform="translate(0.000000,86.000000) scale(0.100000,-0.100000)"fill="#90B5D6" stroke="none">
+                                            <path d="M497 834 c-1 -1 -31 -4 -67 -7 -207 -19 -350 -109 -380 -241 -20 -92
+                                            17 -185 115 -281 109 -108 295 -199 510 -250 328 -78 609 -45 744 87 117 114
+                                            104 245 -41 399 -120 128 -121 129 -151 129 -15 0 -41 7 -57 15 -16 8 -68 31
+                                            -115 50 -48 19 -98 44 -112 55 -14 11 -37 20 -52 20 -14 1 -37 7 -51 14 -15 9
+                                            -32 11 -46 6 -12 -5 -25 -6 -28 -3 -4 5 -263 11 -269 7z m257 -39 c6 -17 36
+                                            -21 36 -5 0 16 40 11 47 -6 11 -28 -13 -39 -49 -21 -20 10 -37 12 -42 7 -6 -6
+                                            -15 -5 -23 1 -9 8 -61 10 -161 7 -135 -5 -154 -8 -235 -38 -112 -41 -130 -60
+                                            -171 -178 -52 -149 130 -334 425 -433 129 -43 236 -60 379 -60 220 1 363 59
+                                            421 172 39 78 12 183 -70 272 -23 24 -41 47 -41 51 0 38 139 -97 170 -166 21
+                                            -47 26 -112 10 -152 -15 -40 -80 -106 -129 -131 -202 -102 -533 -91 -826 26
+                                            -355 143 -514 388 -348 540 92 86 195 114 415 114 87 0 158 3 158 8 0 13 28 7
+                                            34 -8z m160 -21 c20 -8 21 -38 1 -54 -29 -24 -60 21 -33 48 14 14 12 14 32 6z
+                                            m-169 -37 c46 -8 111 -30 126 -44 12 -9 28 -12 50 -8 36 6 83 -9 176 -58 77
+                                            -40 98 -87 39 -87 -58 0 -86 16 -86 48 0 17 -9 37 -22 49 -22 20 -33 21 -363
+                                            19 -358 -1 -399 0 -389 16 10 15 93 48 159 64 53 12 238 13 310 1z m300 -30
+                                            c96 -39 184 -89 167 -95 -7 -2 -40 12 -75 31 -34 19 -90 45 -125 57 -60 22
+                                            -88 40 -60 40 7 0 49 -15 93 -33z m243 -107 c13 0 11 -5 -10 -23 -14 -12 -28
+                                            -29 -31 -37 -4 -11 -7 -9 -12 7 -4 12 -16 25 -26 28 -23 8 -25 25 -4 25 9 0
+                                            21 12 27 26 l12 25 13 -25 c8 -14 21 -26 31 -26z m-958 14 c0 -23 -22 -41 -45
+                                            -37 -32 7 -32 -10 0 -25 32 -15 50 -52 41 -86 -6 -24 -10 -26 -66 -26 -57 0
+                                            -60 1 -60 25 0 22 4 25 38 25 l37 1 -23 19 c-12 10 -28 20 -34 22 -12 4 -21
+                                            66 -12 80 6 9 124 11 124 2z m70 -84 l0 -90 -30 0 -30 0 0 90 0 90 30 0 30 0
+                                            0 -90z m148 68 c-3 -20 -8 -23 -40 -20 l-38 4 0 -46 c0 -34 4 -46 15 -46 10 0
+                                            15 10 15 30 0 25 4 30 25 30 24 0 25 -3 25 -55 l0 -56 -62 3 -63 3 -3 88 -3
+                                            87 66 0 c63 0 66 -1 63 -22z m96 -18 c3 -22 11 -40 16 -40 9 0 7 27 -6 68 -2
+                                            8 7 12 26 12 l30 0 0 -90 0 -90 -30 0 c-27 0 -31 4 -41 45 -6 25 -15 42 -20
+                                            40 -4 -3 -6 -11 -4 -18 18 -60 16 -67 -15 -67 l-30 0 0 90 0 90 34 0 c31 0 34
+                                            -3 40 -40z m138 -25 c-4 -55 -2 -65 12 -65 13 0 16 12 16 65 0 63 1 65 25 65
+                                            25 0 25 -1 25 -90 l0 -91 -62 3 -63 3 -3 88 -3 87 29 0 28 0 -4 -65z m236 16
+                                            c2 -27 10 -50 20 -57 14 -10 14 -15 5 -25 -7 -7 -16 -9 -20 -5 -4 4 -1 12 7
+                                            17 12 9 12 10 -3 5 -10 -3 -34 -6 -53 -6 -31 0 -34 -3 -34 -30 0 -27 -3 -30
+                                            -30 -30 l-30 0 0 90 0 91 68 -3 67 -3 3 -44z m128 -76 c-5 -14 -9 -15 -21 -5
+                                            -12 10 -13 16 -4 27 15 18 34 1 25 -22z m-46 10 c0 -8 -6 -15 -14 -15 -17 0
+                                            -28 14 -19 24 12 12 33 6 33 -9z m100 0 c0 -8 -7 -15 -15 -15 -8 0 -15 7 -15
+                                            15 0 8 7 15 15 15 8 0 15 -7 15 -15z m105 -41 c152 -199 -19 -366 -375 -366
+                                            -128 0 -189 9 -300 44 -79 24 -222 92 -270 126 -49 36 -133 123 -125 130 9 9
+                                            43 11 238 12 179 1 208 -3 188 -23 -6 -6 -11 -50 -11 -102 0 -144 -20 -134
+                                            294 -133 l264 1 16 28 c10 16 19 62 23 109 5 74 4 83 -16 104 -20 21 -28 23
+                                            -135 21 -126 -3 -143 1 -122 30 12 17 28 19 118 20 91 1 109 4 132 23 33 25
+                                            47 21 81 -24z m-544 -129 c6 -25 15 -45 20 -45 5 0 7 6 5 13 -3 6 -7 27 -10
+                                            45 -5 30 -4 32 24 32 l30 0 0 -95 0 -95 -34 0 c-32 0 -35 2 -41 40 -10 57 -28
+                                            64 -20 7 7 -42 5 -45 -19 -49 -14 -3 -28 -3 -31 0 -3 3 -5 47 -5 99 l0 93 35
+                                            0 c33 0 35 -2 46 -45z m231 -42 c3 -49 2 -92 -2 -96 -4 -4 -36 -7 -71 -5 l-64
+                                            3 -3 79 c-2 44 -1 85 2 93 4 9 25 13 69 13 l64 0 5 -87z m76 42 c-7 -62 8 -67
+                                            16 -5 6 44 10 50 30 50 19 0 24 -8 33 -47 l10 -48 2 48 c1 46 2 47 32 47 l32
+                                            0 -7 -52 c-18 -146 -15 -138 -51 -138 -30 0 -33 3 -41 38 l-8 37 -10 -37 c-8
+                                            -34 -13 -38 -42 -38 -32 0 -33 1 -39 58 -3 31 -8 74 -11 95 -6 36 -5 37 26 37
+                                            l33 0 -5 -45z"/>
+                                            <path d="M940 560 c0 -11 5 -20 10 -20 6 0 10 9 10 20 0 11 -4 20 -10 20 -5 0
+                                            -10 -9 -10 -20z"/>
+                                            <path d="M910 280 c0 -38 4 -50 15 -50 11 0 15 12 15 50 0 38 -4 50 -15 50
+                                            -11 0 -15 -12 -15 -50z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </a>
+                    <div class="counter-km">
+                            <svg class="km" width="39" height="32" viewBox="0 0 39 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.6495 5.07837V0.658216C17.6495 0.286726 17.3471 -0.0159927 16.9759 0.000655386C12.3165 0.209591 8.85723 2.54264 7.31638 4.06286C7.06277 4.31308 7.08385 4.71837 7.34113 4.96482L10.4269 7.9208C10.6982 8.18071 11.1285 8.16544 11.4175 7.92537C13.0206 6.59371 15.5002 5.97556 17.0289 5.76929C17.3781 5.72218 17.6495 5.43058 17.6495 5.07837Z" fill="currentColor"/>
+                            <path d="M5.24867 17.6424H0.732263C0.333048 17.6424 0.021015 17.2953 0.0733197 16.8997C0.77592 11.5854 2.81894 8.56516 4.09518 7.39656C4.33365 7.1782 4.69332 7.21381 4.922 7.44239L8.05139 10.5705C8.32856 10.8476 8.30853 11.3013 8.05292 11.5983C6.75146 13.1108 6.14437 15.5177 5.94008 17.022C5.89269 17.371 5.60102 17.6424 5.24867 17.6424Z" fill="currentColor"/>
+                            <path d="M0.658528 21.1738H4.92815C5.27386 21.1738 5.5621 21.4347 5.61448 21.7763C5.86619 23.4178 6.57485 26.0607 7.99208 27.5587C8.27167 27.8542 8.31489 28.329 8.03311 28.6224L4.98544 31.7958C4.73135 32.0604 4.31131 32.0731 4.06298 31.8031C2.54198 30.1494 0.209236 26.5191 0.000649125 21.847C-0.0159199 21.4759 0.28689 21.1738 0.658528 21.1738Z" fill="currentColor"/>
+                            <path d="M38.3415 21.1738H34.0719C33.7261 21.1738 33.4379 21.4347 33.3855 21.7763C33.1338 23.4178 32.4252 26.0607 31.0079 27.5587C30.7283 27.8542 30.6851 28.329 30.9669 28.6224L34.0146 31.7958C34.2687 32.0604 34.6887 32.0731 34.937 31.8031C36.458 30.1494 38.7908 26.5191 38.9994 21.847C39.0159 21.4759 38.7131 21.1738 38.3415 21.1738Z" fill="currentColor"/>
+                            <path d="M38.2677 17.6424H33.7513C33.399 17.6424 33.1073 17.371 33.0599 17.022C32.8556 15.5177 32.2485 13.1108 30.9471 11.5983C30.6915 11.3013 30.6714 10.8476 30.9486 10.5705L34.078 7.44239C34.3067 7.21381 34.6663 7.1782 34.9048 7.39656C36.1811 8.56516 38.2241 11.5854 38.9267 16.8997C38.979 17.2953 38.667 17.6424 38.2677 17.6424Z" fill="currentColor"/>
+                            <path d="M21.3505 0.658216V5.07837C21.3505 5.43058 21.6219 5.72218 21.9711 5.76929C23.4998 5.97556 25.9794 6.59371 27.5825 7.92537C27.8715 8.16544 28.3018 8.18071 28.5731 7.9208L31.6589 4.96482C31.9161 4.71837 31.9372 4.31308 31.6836 4.06286C30.1428 2.54264 26.6836 0.209591 22.0242 0.000655386C21.6529 -0.0159927 21.3505 0.286726 21.3505 0.658216Z" fill="currentColor"/>
+                            <path class="needle" d="M23.5484 20.6584C23.0378 22.5069 21.3434 23.8644 19.3318 23.8644C16.9161 23.8644 14.9579 21.9069 14.9579 19.4922C14.9579 17.0775 16.9161 15.12 19.3318 15.12C20.2963 15.12 21.188 15.4321 21.9112 15.9608H28.2478L23.5484 20.6584Z" fill="currentColor"/>
+                            </svg>
+                    </div>
+
+                    <p class="second-p">In our site, you can hear questions and answers about various programming languages</p>
+                    <div class="social-container">
+
+                                
+                                 <!-- login.html 대신 /login으로 변경 -->
+							<a href="/login" class="social">
+							    <h6 class="social">LOGIN</h6>
+							</a>
+							
+							<!-- signup.html 대신 /signup으로 변경 -->
+							<a href="/signUp" class="social">
+							    <h6 class="social">SIGNUP</h6>
+							</a>
+							
+							<!-- 외부 링크는 그대로 유지 -->
+							<a href="https://github.com/Hwa-A/SpringBootFinalProject_2023_3_2/network" class="social">
+							    <h6 class="social">GIT</h6>
+							</a>
+							
+							<!-- home.html 대신 /home으로 변경 
+							<a href="/home" class="social">
+							    <h6 class="social">home</h6>
+							</a>-->
+                    </div>
+             </div>
+          </div>
+
+
+
+      <div class="cursor"><svg class="cursor-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.8057 24C18.6686 24.0008 18.5327 23.9745 18.4058 23.9227C18.2788 23.8709 18.1634 23.7946 18.066 23.6982L11.6797 17.3079L8.21047 22.5117C8.09999 22.6807 7.94268 22.814 7.7577 22.8953C7.57272 22.9767 7.36806 23.0025 7.16866 22.9696C6.97334 22.9406 6.79032 22.8567 6.64091 22.7277C6.49151 22.5987 6.38187 22.4299 6.32479 22.2411L0.0738999 1.42576C-0.000399633 1.23934 -0.0191717 1.03543 0.0198443 0.8386C0.0588603 0.641767 0.154001 0.460397 0.29381 0.31633C0.433618 0.172263 0.612134 0.071642 0.807861 0.0265821C1.00359 -0.0184778 1.20818 -0.00605488 1.397 0.0623551L22.2333 6.30695C22.4223 6.36398 22.5912 6.47351 22.7204 6.62276C22.8495 6.77202 22.9335 6.95486 22.9626 7.14998C22.9954 7.34918 22.9696 7.55363 22.8882 7.73842C22.8068 7.92322 22.6734 8.08037 22.5042 8.19074L17.2951 11.6565L23.6918 18.0364C23.7895 18.1331 23.867 18.2483 23.9199 18.3751C23.9728 18.5019 24 18.6379 24 18.7753C24 18.9127 23.9728 19.0488 23.9199 19.1756C23.867 19.3024 23.7895 19.4175 23.6918 19.5143L19.5246 23.6773C19.3365 23.8748 19.0784 23.9906 18.8057 24ZM18.8057 21.4917L21.504 18.7962L14.0446 11.3547L19.5142 7.71199L2.64718 2.65386L7.7104 19.5039L11.3568 14.0398L18.8057 21.4917Z" fill="currentColor"/>
+            </svg>
+      </div>
+    
+          <div class="left-window-container">
+                    <div class="top-left-window">
+                        <div class="top-left-buttons">
+                                <svg width="56" height="16" viewBox="0 0 56 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M52 5.00195L51 4.00195L48 7.00195L45 4.00195L44 5.00195L47 8.00195L44 11.002L45 12.002L48 9.00195L51 12.002L52 11.002L49 8.00195L52 5.00195Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M40 0H56V16H40V0ZM41 1V15H55V1H41Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16V16H0V0ZM1 1V15H15V1H1Z" fill="currentColor"/>
+                                <path d="M3.5 11.5H12.5V12.5H3.5V11.5Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H36V16H20V0ZM21 1V15H35V1H21Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M31 5.00195H25V11.002H31V5.00195ZM24 4.00195V12.002H32V4.00195H24Z" fill="currentColor"/>
+                                </svg>
+                         </div>
+                    </div>
+                    <div class="main-left-window">
+                        <div class="world"><svg class="world-svg" width="128" height="83" viewBox="0 0 128 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M103 0C103 6.62741 108.373 12 115 12C108.373 12 103 17.3726 103 24C103 17.3726 97.6272 12 91 12C97.6272 12 103 6.62741 103 0Z" fill="currentColor"/>
+                            <path d="M122 21C122 24.3137 124.686 27 128 27C124.686 27 122 29.6863 122 33C122 29.6863 119.314 27 116 27C119.314 27 122 24.3137 122 21Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M58.3033 19C73.773 19 88.3333 22.2665 99.2993 28.2003C110.463 34.2364 116.61 42.3332 116.61 51C116.61 59.6668 110.463 67.7636 99.2993 73.7997C88.3333 79.7335 73.773 83 58.3033 83C42.8335 83 28.2769 79.7335 17.3109 73.7997C6.14685 67.7636 0 59.6668 0 51C0 42.3332 6.14685 34.2364 17.3109 28.2003C28.2696 22.2665 42.8335 19 58.3033 19ZM41.5858 22.3726C19.0275 26.1213 2.52301 37.2411 2.04285 50.4008H20.2816C20.5491 38.1022 29.1731 27.4949 41.5858 22.3726ZM51.3821 21.7142C35.056 24.3619 22.6471 36.1819 22.3135 50.4008H40.5559C40.6366 42.2528 42.4117 34.5944 45.5731 28.7885C47.2516 25.71 49.222 23.3289 51.3821 21.7142ZM20.278 51.2229H2.03552C2.22986 64.5629 18.8439 75.8605 41.6305 79.6349C29.0801 74.4793 20.3807 63.6897 20.278 51.2229ZM40.5522 51.2229H22.3061C22.4345 65.6225 34.9262 77.6253 51.4009 80.2889C49.2407 78.6849 47.2565 76.288 45.5731 73.2042C42.364 67.2996 40.5816 59.5097 40.5522 51.2229ZM42.5694 51.2229C42.6318 67.2411 49.4461 80.2779 57.8815 80.6871L57.8851 59.4439C56.4731 54.0071 54.8998 52.6223 49.083 51.2229H42.5694ZM50.4987 50.4117C55.1711 49.111 56.5942 47.5252 57.8815 42.5561V21.3129C49.5048 21.7184 42.7381 34.5616 42.5731 50.4117H50.4987ZM96.3102 50.4117H114.564C114.091 37.2325 97.5572 26.1067 74.9614 22.3652C87.4017 27.4732 96.0425 38.0984 96.3102 50.4117ZM76.0359 50.4117H94.2857C93.963 36.1765 81.541 24.3528 65.1946 21.7111C67.3511 23.3188 69.339 25.712 71.0187 28.7995C74.2021 34.6054 75.9552 42.2638 76.0359 50.4117ZM74.0224 50.3971C73.8574 34.5469 67.0908 21.7038 58.7103 21.2982V42.5414C59.9977 47.5106 61.4244 49.0964 66.0968 50.3971H74.0224ZM67.5125 51.2083C61.6957 52.6077 60.1224 53.9925 58.7103 59.4293V80.6725C67.1531 80.2633 73.9637 67.2265 74.0261 51.2083H67.5125ZM76.0579 51.2083C76.025 59.4951 74.2462 67.2923 71.0333 73.1895V73.2042C69.3463 76.288 67.3768 78.6629 65.1946 80.2743C81.6656 77.6106 94.1573 65.6079 94.2857 51.2083H76.0579ZM96.3322 51.2083C96.2479 63.675 87.5374 74.4647 74.976 79.6202V79.6349C97.7662 75.8605 114.391 64.5629 114.575 51.2083H96.3322Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+          </div>
+          <div class="windows-container">
+                    <div class="right-window-container">
+                        <div class="top-right-window">
+                            <div class="top-right-buttons">
+                                <svg width="56" height="16" viewBox="0 0 56 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M52 5.00195L51 4.00195L48 7.00195L45 4.00195L44 5.00195L47 8.00195L44 11.002L45 12.002L48 9.00195L51 12.002L52 11.002L49 8.00195L52 5.00195Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M40 0H56V16H40V0ZM41 1V15H55V1H41Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16V16H0V0ZM1 1V15H15V1H1Z" fill="currentColor"/>
+                                <path d="M3.5 11.5H12.5V12.5H3.5V11.5Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H36V16H20V0ZM21 1V15H35V1H21Z" fill="currentColor"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M31 5.00195H25V11.002H31V5.00195ZM24 4.00195V12.002H32V4.00195H24Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+                            <div class="main-right-window">
+                                 <div class="eyes"><svg class="eye" width="54" height="44" viewBox="0 0 54 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M41.1788 44C34.0978 44 28.3575 34.1503 28.3575 22C28.3575 9.84974 34.0978 0 41.1788 0C48.2597 0 54 9.84974 54 22C54 34.1503 48.2597 44 41.1788 44ZM41.1788 39.3192C35.5973 39.3192 31.0726 31.5651 31.0726 22C31.0726 12.4349 35.5973 4.68085 41.1788 4.68085C46.7602 4.68085 51.2849 12.4349 51.2849 22C51.2849 31.5651 46.7602 39.3192 41.1788 39.3192Z" fill="currentColor"/>
+                                    <path d="M43.1397 27.617C43.1397 29.599 44.1527 31.2057 45.4022 31.2057C46.6518 31.2057 47.6648 29.599 47.6648 27.617C47.6648 25.6351 46.6518 24.0284 45.4022 24.0284C44.1527 24.0284 43.1397 25.6351 43.1397 27.617Z" fill="currentColor"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8212 44C5.74026 44 4.17233e-07 34.1503 4.17233e-07 22C4.17233e-07 9.84974 5.74026 0 12.8212 0C19.9022 0 25.6425 9.84974 25.6425 22C25.6425 34.1503 19.9022 44 12.8212 44ZM12.8212 39.3192C7.23976 39.3192 2.71508 31.5651 2.71508 22C2.71508 12.4349 7.23976 4.68085 12.8212 4.68085C18.4027 4.68085 22.9274 12.4349 22.9274 22C22.9274 31.5651 18.4027 39.3192 12.8212 39.3192Z" fill="currentColor"/>
+                                    <path d="M15.6872 26.0251C15.6872 28.0071 16.7001 29.6138 17.9497 29.6138C19.1993 29.6138 20.2123 28.0071 20.2123 26.0251C20.2123 24.0432 19.1993 22.4365 17.9497 22.4365C16.7001 22.4365 15.6872 24.0432 15.6872 26.0251Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                            </div>
+                </div>
+                    <div class="square"></div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
