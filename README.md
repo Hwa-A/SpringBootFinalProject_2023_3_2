@@ -81,17 +81,5 @@
 
 
 ## 관련 이론
-### NoSQL 클라우드 데이터베이스
-**: Firebase Realtime Database는 NoSQL 클라우드 데이터베이스 방식**<br>
-모든 클라이언트에서 실시간으로 데이터가 동기화되고 앱이 오프라인일 때도 데이터를 사용 가능<br>
-https://firebase.google.com/docs/database?hl=ko
-### GeoHash
-**: 위치를 고유한 문자열로 인코딩하는 방법**<br>
-　　　- 지구를 일정한 크기의 구역으로 나눈 후, 각 구역에 고유한 해쉬값을 부여함으로써 지리적 위치를 문자열로 표현<br>
-　　　- 지정 반경 내의 좌표 데이터만 선별하여 가져올 수 있음
-### Geocoding
-**: 주소나 지명을 좌표(위도 및 경도)로 변환하는 프로세스**<br>
-　　　- 지명, 도로명 주소, 건물명 등을 입력하면 이를 지리적 좌표로 매핑하여 해당 위치를 식별
-### 국토정보플랫폼의 검색API(https://map.ngii.go.kr/mn/mainPage.do) 제공 API
-구글과 카카오 지도에서 제공하는 주소 검색 API는 과금의 우려로, 해당 API를 사용해 직접 구현
-https://map.ngii.go.kr/mi/emapApi/searchApiGuid.do
+ # spring security
+  : 애플리케이션의 보안을 담당하는 스프링 하위 프레임워크를 이용해 인증과 권한에 대한 부분을 Filter 흐름에 따라 처리하였다.
